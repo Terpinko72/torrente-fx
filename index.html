@@ -2150,37 +2150,45 @@ function robotTile(cfg){
   const selected = robotSelected.includes(cfg.id);
   const p = cfg.params || {};
   const all = getAll();
-  const cfgTrades = all.filter(t=>{ const ac=getActiveConfig(t.openDate,t.acct); return ac&&ac.id===cfg.id; });
-  const cfgPnl = cfgTrades.reduce((s,t)=>s+t.net,0);
-  const cfgWr = cfgTrades.length ? cfgTrades.filter(t=>t.net>0.01).length/cfgTrades.length*100 : 0;
+  const cfgTrades = all.filter(function(t){const ac=getActiveConfig(t.openDate,t.acct);return ac&&ac.id===cfg.id;});
+  const cfgPnl = cfgTrades.reduce(function(s,t){return s+t.net;},0);
+  const cfgWr = cfgTrades.length ? cfgTrades.filter(function(t){return t.net>0.01;}).length/cfgTrades.length*100 : 0;
 
-  const bg = active
-    ? (selected ? 'background:linear-gradient(135deg,#bbf7d0,#86efac);border:2px solid #16a34a'
-                : 'background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac')
-    : (selected ? 'background:linear-gradient(135deg,#e2e8f0,#cbd5e1);border:2px solid #64748b'
-                : 'background:var(--surface);border:2px solid var(--border)');
+  let bg;
+  if(active && selected) bg='background:linear-gradient(135deg,#bbf7d0,#86efac);border:2px solid #16a34a;box-shadow:0 0 0 3px rgba(22,163,74,.3)';
+  else if(active) bg='background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac';
+  else if(selected) bg='background:linear-gradient(135deg,#e2e8f0,#cbd5e1);border:2px solid #64748b;box-shadow:0 0 0 3px rgba(100,116,139,.3)';
+  else bg='background:var(--surface);border:2px solid var(--border)';
 
-  return `<div onclick="toggleRobotTile('${cfg.id}')" style="border-radius:12px;padding:14px;cursor:pointer;transition:all .2s;${bg}${selected?';box-shadow:0 0 0 3px rgba(22,163,74,.3)':''}">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-      <div style="display:flex;gap:4px;align-items:center">
-        ${active ? '<div style="width:7px;height:7px;border-radius:50%;background:#16a34a;flex-shrink:0"></div>' : '<div style="width:7px;height:7px;border-radius:50%;background:#94a3b8;flex-shrink:0"></div>'}
-        <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);line-height:1.2">${cfg.name}</span>
-      </div>
-      ${selected ? '<span style="font-size:10px;background:#16a34a;color:#fff;border-radius:4px;padding:1px 5px">✓</span>' : ''}
-    </div>
-    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">
-      ${cfg.symbol ? `<span style="font-family:'DM Mono',monospace;font-size:10px;background:#ede9fe;color:#6d28d9;border-radius:4px;padding:1px 6px;border:1px solid #ddd6fe">${cfg.symbol}</span>` : ''}
-      ${cfg.magic ? `<span style="font-family:'DM Mono',monospace;font-size:10px;background:#f1f5f9;color:#475569;border-radius:4px;padding:1px 6px;border:1px solid #e2e8f0">M:${cfg.magic}</span>` : ''}
-      ${cfg.tf ? `<span style="font-family:'DM Mono',monospace;font-size:10px;background:#eff6ff;color:#1d4ed8;border-radius:4px;padding:1px 6px;border:1px solid #bfdbfe">${cfg.tf}</span>` : ''}
-    </div>
-    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:6px">${cfg.from ? new Date(cfg.from).toLocaleDateString('hu-HU') : '—'} → ${cfg.to ? new Date(cfg.to).toLocaleDateString('hu-HU') : 'aktív'}</div>
-    ${cfgTrades.length ? `<div style="display:flex;gap:8px">
-      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)">${cfgTrades.length} trade</span>
-      <span style="font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:${cfgPnl>=0?'var(--green)':'var(--red)'}">${cfgPnl>=0?'+':''}${cfgPnl.toFixed(0)}€</span>
-      <span style="font-family:'DM Mono',monospace;font-size:10px;color:${cfgWr>=50?'var(--green)':'var(--red)'}">${cfgWr.toFixed(0)}%WR</span>
-    </div>` : `<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)">Még nincs trade</span>`}
-  </div>`;
+  const dot = active
+    ? '<div style="width:7px;height:7px;border-radius:50%;background:#16a34a;flex-shrink:0"></div>'
+    : '<div style="width:7px;height:7px;border-radius:50%;background:#94a3b8;flex-shrink:0"></div>';
+  const selBadge = selected ? '<span style="font-size:10px;background:#16a34a;color:#fff;border-radius:4px;padding:1px 5px">✓</span>' : '';
+  const symBadge = cfg.symbol ? '<span style="font-family:DM Mono,monospace;font-size:10px;background:#ede9fe;color:#6d28d9;border-radius:4px;padding:1px 6px;border:1px solid #ddd6fe">'+cfg.symbol+'</span>' : '';
+  const magicBadge = cfg.magic ? '<span style="font-family:DM Mono,monospace;font-size:10px;background:#f1f5f9;color:#475569;border-radius:4px;padding:1px 6px;border:1px solid #e2e8f0">M:'+cfg.magic+'</span>' : '';
+  const tfBadge = cfg.tf ? '<span style="font-family:DM Mono,monospace;font-size:10px;background:#eff6ff;color:#1d4ed8;border-radius:4px;padding:1px 6px;border:1px solid #bfdbfe">'+cfg.tf+'</span>' : '';
+  const dateStr = (cfg.from ? new Date(cfg.from).toLocaleDateString('hu-HU') : '—') + ' → ' + (cfg.to ? new Date(cfg.to).toLocaleDateString('hu-HU') : 'aktív');
+  const pnlColor = cfgPnl>=0 ? 'var(--green)' : 'var(--red)';
+  const wrColor = cfgWr>=50 ? 'var(--green)' : 'var(--red)';
+  const statsHtml = cfgTrades.length
+    ? '<div style="display:flex;gap:8px">'
+      +'<span style="font-family:DM Mono,monospace;font-size:10px;color:var(--text3)">'+cfgTrades.length+' trade</span>'
+      +'<span style="font-family:DM Mono,monospace;font-size:10px;font-weight:600;color:'+pnlColor+'">'+( cfgPnl>=0?'+':'')+cfgPnl.toFixed(0)+'€</span>'
+      +'<span style="font-family:DM Mono,monospace;font-size:10px;color:'+wrColor+'">'+cfgWr.toFixed(0)+'%WR</span>'
+      +'</div>'
+    : '<span style="font-family:DM Mono,monospace;font-size:10px;color:var(--text3)">Még nincs trade</span>';
+
+  return '<div onclick="toggleRobotTile(''+cfg.id+'')" style="border-radius:12px;padding:14px;cursor:pointer;transition:all .2s;'+bg+'">'
+    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">'
+    +'<div style="display:flex;gap:4px;align-items:center">'+dot
+    +'<span style="font-family:Syne,sans-serif;font-size:13px;font-weight:700;color:var(--text);line-height:1.2">'+cfg.name+'</span>'
+    +'</div>'+selBadge+'</div>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+symBadge+magicBadge+tfBadge+'</div>'
+    +'<div style="font-family:DM Mono,monospace;font-size:10px;color:var(--text3);margin-bottom:6px">'+dateStr+'</div>'
+    +statsHtml
+    +'</div>';
 }
+
 
 function toggleRobotTile(id){
   if(robotSelected.includes(id)){
@@ -2231,46 +2239,53 @@ function clearRobotCompare(){
 function robotConfigCard(cfg, compact){
   const isActive = isRobotActive(cfg);
   const p = cfg.params || {};
-  const boolParams = ROBOT_BOOL_PARAMS.filter(bp=>p[bp]===true||p[bp]==='true');
+  const boolParams = ROBOT_BOOL_PARAMS.filter(function(bp){return p[bp]===true||p[bp]==='true';});
   const fromStr = cfg.from ? new Date(cfg.from).toLocaleDateString('hu-HU') : '—';
   const toStr = cfg.to ? new Date(cfg.to).toLocaleDateString('hu-HU') : 'jelenleg aktív';
   const all = getAll();
-  const cfgTrades = all.filter(t=>{ const ac=getActiveConfig(t.openDate,t.acct); return ac&&ac.id===cfg.id; });
-  const cfgPnl = cfgTrades.reduce((s,t)=>s+t.net,0);
-  const cfgWr = cfgTrades.length ? cfgTrades.filter(t=>t.net>0.01).length/cfgTrades.length*100 : 0;
+  const cfgTrades = all.filter(function(t){const ac=getActiveConfig(t.openDate,t.acct);return ac&&ac.id===cfg.id;});
+  const cfgPnl = cfgTrades.reduce(function(s,t){return s+t.net;},0);
+  const cfgWr = cfgTrades.length ? cfgTrades.filter(function(t){return t.net>0.01;}).length/cfgTrades.length*100 : 0;
+  const borderColor = isActive ? '#16a34a' : 'var(--border2)';
+  const activeBadge = isActive ? '<span class="badge badge-g" style="font-size:9px">AKTÍV</span>' : '';
+  const magicBadge = cfg.magic ? '<span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;font-family:DM Mono,monospace">Magic: '+cfg.magic+'</span>' : '';
+  const tfBadge = cfg.tf ? '<span class="badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-family:DM Mono,monospace">'+cfg.tf+'</span>' : '';
+  const symBadge = cfg.symbol ? '<span class="badge" style="background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;font-family:DM Mono,monospace">'+cfg.symbol+'</span>' : '';
+  const acctBadge = '<span class="badge" style="background:var(--surface2);color:var(--text3);border:1px solid var(--border)">'+(cfg.acct==='both'?'Mindkét számla':cfg.acct+'. számla')+'</span>';
+  const wrCls = cfgWr>=50 ? 'c-g' : 'c-r';
+  const pnlCls = cfgPnl>=0 ? 'c-g' : 'c-r';
+  const statsHtml = cfgTrades.length
+    ? '<div style="display:flex;gap:16px;padding:8px 12px;background:var(--surface2);border-radius:7px;margin-bottom:10px">'
+      +'<div style="font-family:DM Mono,monospace;font-size:11px"><span style="color:var(--text3)">Trade-ek:</span> <strong>'+cfgTrades.length+'</strong></div>'
+      +'<div style="font-family:DM Mono,monospace;font-size:11px"><span style="color:var(--text3)">Win Rate:</span> <strong class="'+wrCls+'">'+cfgWr.toFixed(1)+'%</strong></div>'
+      +'<div style="font-family:DM Mono,monospace;font-size:11px"><span style="color:var(--text3)">P&L:</span> <strong class="'+pnlCls+'">'+fmtUSD(cfgPnl)+'</strong></div>'
+      +'</div>'
+    : '<div style="font-size:11px;color:var(--text3);font-family:DM Mono,monospace;margin-bottom:8px">Még nincs trade ezzel a konfigurációval</div>';
+  const riskBadge = p.riskPercent ? '<span style="font-family:DM Mono,monospace;font-size:10px;background:#f0fdf4;color:#15803d;padding:2px 8px;border-radius:4px;border:1px solid #bbf7d0">Risk: '+p.riskPercent+'%</span>' : '';
+  const bodyBadge = p.bodySizeMultiplicator ? '<span style="font-family:DM Mono,monospace;font-size:10px;background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">Body×'+p.bodySizeMultiplicator+'</span>' : '';
+  const candleBadge = p.min_candlesize ? '<span style="font-family:DM Mono,monospace;font-size:10px;background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">Candle: '+p.min_candlesize+'–'+p.max_candlesize+'</span>' : '';
+  const boolBadges = boolParams.map(function(bp){return '<span style="font-family:DM Mono,monospace;font-size:10px;background:#eff6ff;color:#1d4ed8;padding:2px 8px;border-radius:4px;border:1px solid #bfdbfe">'+bp+': ✓</span>';}).join('');
+  const noteHtml = cfg.note ? '<div style="margin-top:8px;font-size:12px;color:var(--text2);font-style:italic">"'+cfg.note+'"</div>' : '';
 
-  return `<div class="panel" style="border-left:3px solid ${isActive?'#16a34a':'var(--border2)'}">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
-      <div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700">${cfg.name}</span>
-          ${isActive?'<span class="badge badge-g" style="font-size:9px">AKTÍV</span>':''}
-          ${cfg.magic?`<span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;font-family:'DM Mono',monospace">Magic: ${cfg.magic}</span>`:''}
-          ${cfg.tf?`<span class="badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-family:'DM Mono',monospace">${cfg.tf}</span>`:''}
-          ${cfg.symbol?`<span class="badge" style="background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;font-family:'DM Mono',monospace">${cfg.symbol}</span>`:''}
-          <span class="badge" style="background:var(--surface2);color:var(--text3);border:1px solid var(--border)">${cfg.acct==='both'?'Mindkét számla':cfg.acct+'. számla'}</span>
-        </div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:4px">${fromStr} → ${toStr}</div>
-      </div>
-      <div style="display:flex;gap:6px">
-        <button onclick="openRobotModal('${cfg.id}')" style="background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:4px 8px;cursor:pointer;font-size:11px">✏</button>
-        <button onclick="deleteRobotConfig('${cfg.id}')" style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:5px;padding:4px 8px;cursor:pointer;font-size:11px;color:var(--red)">✕</button>
-      </div>
-    </div>
-    ${cfgTrades.length?`<div style="display:flex;gap:16px;padding:8px 12px;background:var(--surface2);border-radius:7px;margin-bottom:10px">
-      <div style="font-family:'DM Mono',monospace;font-size:11px"><span style="color:var(--text3)">Trade-ek:</span> <strong>${cfgTrades.length}</strong></div>
-      <div style="font-family:'DM Mono',monospace;font-size:11px"><span style="color:var(--text3)">Win Rate:</span> <strong class="${cfgWr>=50?'c-g':'c-r'}">${cfgWr.toFixed(1)}%</strong></div>
-      <div style="font-family:'DM Mono',monospace;font-size:11px"><span style="color:var(--text3)">P&L:</span> <strong class="${cfgPnl>=0?'c-g':'c-r'}">${fmtUSD(cfgPnl)}</strong></div>
-    </div>`:'<div style="font-size:11px;color:var(--text3);font-family:DM Mono,monospace;margin-bottom:8px">Még nincs trade ezzel a konfigurációval</div>'}
-    <div style="display:flex;gap:6px;flex-wrap:wrap">
-      ${p.riskPercent?`<span style="font-family:'DM Mono',monospace;font-size:10px;background:#f0fdf4;color:#15803d;padding:2px 8px;border-radius:4px;border:1px solid #bbf7d0">Risk: ${p.riskPercent}%</span>`:''}
-      ${p.bodySizeMultiplicator?`<span style="font-family:'DM Mono',monospace;font-size:10px;background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">Body×${p.bodySizeMultiplicator}</span>`:''}
-      ${p.min_candlesize?`<span style="font-family:'DM Mono',monospace;font-size:10px;background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">Candle: ${p.min_candlesize}–${p.max_candlesize}</span>`:''}
-      ${boolParams.map(bp=>`<span style="font-family:'DM Mono',monospace;font-size:10px;background:#eff6ff;color:#1d4ed8;padding:2px 8px;border-radius:4px;border:1px solid #bfdbfe">${bp}: ✓</span>`).join('')}
-    </div>
-    ${cfg.note?`<div style="margin-top:8px;font-size:12px;color:var(--text2);font-style:italic">"${cfg.note}"</div>`:''}
-  </div>`;
+  return '<div class="panel" style="border-left:3px solid '+borderColor+'">'
+    +'<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">'
+    +'<div>'
+    +'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
+    +'<span style="font-family:Syne,sans-serif;font-size:15px;font-weight:700">'+cfg.name+'</span>'
+    +activeBadge+magicBadge+tfBadge+symBadge+acctBadge
+    +'</div>'
+    +'<div style="font-family:DM Mono,monospace;font-size:10px;color:var(--text3);margin-top:4px">'+fromStr+' → '+toStr+'</div>'
+    +'</div>'
+    +'<div style="display:flex;gap:6px">'
+    +'<button onclick="openRobotModal(''+cfg.id+'')" style="background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:4px 8px;cursor:pointer;font-size:11px">✏</button>'
+    +'<button onclick="deleteRobotConfig(''+cfg.id+'')" style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:5px;padding:4px 8px;cursor:pointer;font-size:11px;color:var(--red)">✕</button>'
+    +'</div></div>'
+    +statsHtml
+    +'<div style="display:flex;gap:6px;flex-wrap:wrap">'+riskBadge+bodyBadge+candleBadge+boolBadges+'</div>'
+    +noteHtml
+    +'</div>';
 }
+
 
 function onRobotSymbolChange(){
   const v = document.getElementById('rc-symbol').value;
