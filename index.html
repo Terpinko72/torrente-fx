@@ -526,25 +526,27 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 <!-- ROBOT -->
 <div class="page" id="page-robot">
   <div class="ph">
-    <div><div class="ph-title">🤖 Robot beállítások</div><div class="ph-sub">Nomikomu konfiguráció verziókövetés</div></div>
+    <div><div class="ph-title">🤖 Robot konfigurációk</div><div class="ph-sub">Kattints egy csempére a részletekért · Kattints 2-re az összehasonlításhoz</div></div>
     <button class="btn btn-dark" onclick="openRobotModal()">+ Új konfiguráció</button>
   </div>
-
-  <!-- Aktív konfiguráció kártya -->
-  <div id="robot-active-wrap" style="display:none;margin-bottom:16px">
-    <div class="panel" style="border-left:4px solid #16a34a">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-        <div style="width:8px;height:8px;border-radius:50%;background:#16a34a;animation:pulse 2s infinite"></div>
-        <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700">Aktív konfiguráció</span>
-      </div>
-      <div id="robot-active-content"></div>
+  <div id="robot-tile-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px"></div>
+  <div id="robot-compare-wrap" style="display:none;margin-bottom:20px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700">Összehasonlítás</span>
+      <button onclick="clearRobotCompare()" style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:5px;padding:3px 10px;cursor:pointer;font-size:11px;color:var(--red)">✕ Bezárás</button>
     </div>
+    <div id="robot-compare-content" style="display:grid;grid-template-columns:1fr 1fr;gap:16px"></div>
   </div>
-
-  <!-- Összes konfiguráció -->
-  <div id="robot-configs-wrap">
-    <div class="empty-row">Még nincs rögzített konfiguráció — adj hozzá egyet!</div>
+  <div id="robot-detail-wrap" style="display:none;margin-bottom:20px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700">Részletek</span>
+      <button onclick="clearRobotDetail()" style="background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:3px 10px;cursor:pointer;font-size:11px;color:var(--text2)">✕ Bezárás</button>
+    </div>
+    <div id="robot-detail-content"></div>
   </div>
+  <!-- kept for compat -->
+  <div id="robot-active-wrap" style="display:none"><div id="robot-active-content"></div></div>
+  <div id="robot-configs-wrap" style="display:none"></div>
 </div>
 
 <!-- ROBOT MODAL -->
@@ -2116,70 +2118,134 @@ function getActiveConfig(date, acct, sym){
   })||null;
 }
 
+let robotSelected = [];
+
 function renderRobotPage(){
-  const today=new Date();
-
-  const activeConfigs=ROBOT_CONFIGS.filter(c=>{
-    const from=new Date(c.from);
-    const to=c.to?new Date(c.to):new Date('2099-12-31');
-    return today>=from&&today<=to;
-  });
-  const passiveConfigs=ROBOT_CONFIGS.filter(c=>c.to&&new Date(c.to)<today)
-    .sort((a,b)=>new Date(b.to)-new Date(a.to));
-
-  const activeWrap=document.getElementById('robot-active-wrap');
-  const activeContent=document.getElementById('robot-active-content');
-  if(activeConfigs.length){
-    activeWrap.style.display='block';
-    activeContent.innerHTML=activeConfigs.map(cfg=>robotConfigCard(cfg,true)).join('');
-  } else {
-    activeWrap.style.display='none';
-  }
-
-  // Passzív konfigurációk
-  const wrap=document.getElementById('robot-configs-wrap');
+  const today = new Date();
+  const grid = document.getElementById('robot-tile-grid');
   if(!ROBOT_CONFIGS.length){
-    wrap.innerHTML='<div class="empty-row">Még nincs rögzített konfiguráció — adj hozzá egyet!</div>';
+    grid.innerHTML = '<div class="empty-row" style="grid-column:1/-1">Még nincs konfiguráció — adj hozzá egyet!</div>';
     return;
   }
-  if(!passiveConfigs.length){
-    wrap.innerHTML='<div style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--text3);padding:8px 0">Még nincs lezárt konfiguráció</div>';
-    return;
-  }
-  wrap.innerHTML=`<details style="margin-top:8px">
-    <summary style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);cursor:pointer;user-select:none;padding:8px 0">
-      ▸ Korábbi konfigurációk (${passiveConfigs.length} db)
-    </summary>
-    <div style="margin-top:10px">
-      ${passiveConfigs.map(cfg=>robotConfigCard(cfg,false)).join('')}
+  // Sort: active first, then by date desc
+  const sorted = ROBOT_CONFIGS.slice().sort((a,b)=>{
+    const aActive = isRobotActive(a);
+    const bActive = isRobotActive(b);
+    if(aActive && !bActive) return -1;
+    if(!aActive && bActive) return 1;
+    return new Date(b.from) - new Date(a.from);
+  });
+  grid.innerHTML = sorted.map(cfg => robotTile(cfg)).join('');
+}
+
+function isRobotActive(cfg){
+  const today = new Date();
+  const from = new Date(cfg.from);
+  const to = cfg.to ? new Date(cfg.to) : new Date('2099-12-31');
+  return today >= from && today <= to;
+}
+
+function robotTile(cfg){
+  const active = isRobotActive(cfg);
+  const selected = robotSelected.includes(cfg.id);
+  const p = cfg.params || {};
+  const all = getAll();
+  const cfgTrades = all.filter(t=>{ const ac=getActiveConfig(t.openDate,t.acct); return ac&&ac.id===cfg.id; });
+  const cfgPnl = cfgTrades.reduce((s,t)=>s+t.net,0);
+  const cfgWr = cfgTrades.length ? cfgTrades.filter(t=>t.net>0.01).length/cfgTrades.length*100 : 0;
+
+  const bg = active
+    ? (selected ? 'background:linear-gradient(135deg,#bbf7d0,#86efac);border:2px solid #16a34a'
+                : 'background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #86efac')
+    : (selected ? 'background:linear-gradient(135deg,#e2e8f0,#cbd5e1);border:2px solid #64748b'
+                : 'background:var(--surface);border:2px solid var(--border)');
+
+  return `<div onclick="toggleRobotTile('${cfg.id}')" style="border-radius:12px;padding:14px;cursor:pointer;transition:all .2s;${bg}${selected?';box-shadow:0 0 0 3px rgba(22,163,74,.3)':''}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+      <div style="display:flex;gap:4px;align-items:center">
+        ${active ? '<div style="width:7px;height:7px;border-radius:50%;background:#16a34a;flex-shrink:0"></div>' : '<div style="width:7px;height:7px;border-radius:50%;background:#94a3b8;flex-shrink:0"></div>'}
+        <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);line-height:1.2">${cfg.name}</span>
+      </div>
+      ${selected ? '<span style="font-size:10px;background:#16a34a;color:#fff;border-radius:4px;padding:1px 5px">✓</span>' : ''}
     </div>
-  </details>`;
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">
+      ${cfg.symbol ? `<span style="font-family:'DM Mono',monospace;font-size:10px;background:#ede9fe;color:#6d28d9;border-radius:4px;padding:1px 6px;border:1px solid #ddd6fe">${cfg.symbol}</span>` : ''}
+      ${cfg.magic ? `<span style="font-family:'DM Mono',monospace;font-size:10px;background:#f1f5f9;color:#475569;border-radius:4px;padding:1px 6px;border:1px solid #e2e8f0">M:${cfg.magic}</span>` : ''}
+      ${cfg.tf ? `<span style="font-family:'DM Mono',monospace;font-size:10px;background:#eff6ff;color:#1d4ed8;border-radius:4px;padding:1px 6px;border:1px solid #bfdbfe">${cfg.tf}</span>` : ''}
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:6px">${cfg.from ? new Date(cfg.from).toLocaleDateString('hu-HU') : '—'} → ${cfg.to ? new Date(cfg.to).toLocaleDateString('hu-HU') : 'aktív'}</div>
+    ${cfgTrades.length ? `<div style="display:flex;gap:8px">
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)">${cfgTrades.length} trade</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:${cfgPnl>=0?'var(--green)':'var(--red)'}">${cfgPnl>=0?'+':''}${cfgPnl.toFixed(0)}€</span>
+      <span style="font-family:'DM Mono',monospace;font-size:10px;color:${cfgWr>=50?'var(--green)':'var(--red)'}">${cfgWr.toFixed(0)}%WR</span>
+    </div>` : `<span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)">Még nincs trade</span>`}
+  </div>`;
+}
+
+function toggleRobotTile(id){
+  if(robotSelected.includes(id)){
+    robotSelected = robotSelected.filter(x=>x!==id);
+  } else {
+    if(robotSelected.length >= 2) robotSelected.shift();
+    robotSelected.push(id);
+  }
+  renderRobotPage();
+  if(robotSelected.length === 2){
+    showRobotCompare();
+  } else if(robotSelected.length === 1){
+    showRobotDetail(robotSelected[0]);
+  } else {
+    clearRobotDetail();
+    clearRobotCompare();
+  }
+}
+
+function showRobotDetail(id){
+  const cfg = ROBOT_CONFIGS.find(c=>c.id===id);
+  if(!cfg) return;
+  document.getElementById('robot-compare-wrap').style.display = 'none';
+  document.getElementById('robot-detail-wrap').style.display = 'block';
+  document.getElementById('robot-detail-content').innerHTML = robotConfigCard(cfg, false);
+}
+
+function showRobotCompare(){
+  const cfgs = robotSelected.map(id=>ROBOT_CONFIGS.find(c=>c.id===id)).filter(Boolean);
+  document.getElementById('robot-detail-wrap').style.display = 'none';
+  document.getElementById('robot-compare-wrap').style.display = 'block';
+  document.getElementById('robot-compare-content').innerHTML = cfgs.map(cfg=>robotConfigCard(cfg, false)).join('');
+}
+
+function clearRobotDetail(){
+  robotSelected = [];
+  renderRobotPage();
+  document.getElementById('robot-detail-wrap').style.display = 'none';
+}
+
+function clearRobotCompare(){
+  robotSelected = [];
+  renderRobotPage();
+  document.getElementById('robot-compare-wrap').style.display = 'none';
+  document.getElementById('robot-detail-wrap').style.display = 'none';
 }
 
 function robotConfigCard(cfg, compact){
-  const isActive=!cfg.to||new Date(cfg.to)>=new Date();
-  const p=cfg.params||{};
+  const isActive = isRobotActive(cfg);
+  const p = cfg.params || {};
+  const boolParams = ROBOT_BOOL_PARAMS.filter(bp=>p[bp]===true||p[bp]==='true');
+  const fromStr = cfg.from ? new Date(cfg.from).toLocaleDateString('hu-HU') : '—';
+  const toStr = cfg.to ? new Date(cfg.to).toLocaleDateString('hu-HU') : 'jelenleg aktív';
+  const all = getAll();
+  const cfgTrades = all.filter(t=>{ const ac=getActiveConfig(t.openDate,t.acct); return ac&&ac.id===cfg.id; });
+  const cfgPnl = cfgTrades.reduce((s,t)=>s+t.net,0);
+  const cfgWr = cfgTrades.length ? cfgTrades.filter(t=>t.net>0.01).length/cfgTrades.length*100 : 0;
 
-  const boolParams=ROBOT_BOOL_PARAMS.filter(bp=>p[bp]===true||p[bp]==='true');
-  const fromStr=cfg.from?new Date(cfg.from).toLocaleDateString('hu-HU'):'—';
-  const toStr=cfg.to?new Date(cfg.to).toLocaleDateString('hu-HU'):'jelenleg aktív';
-
-  // Trade statisztika ezzel a konfiggal
-  const all=getAll();
-  const cfgTrades=all.filter(t=>{
-    const ac=getActiveConfig(t.openDate, t.acct);
-    return ac&&ac.id===cfg.id;
-  });
-  const cfgPnl=cfgTrades.reduce((s,t)=>s+t.net,0);
-  const cfgWr=cfgTrades.length?cfgTrades.filter(t=>t.net>0.01).length/cfgTrades.length*100:0;
-
-  return `<div class="panel" style="margin-bottom:12px;border-left:3px solid ${isActive?'#16a34a':'var(--border2)'}">
+  return `<div class="panel" style="border-left:3px solid ${isActive?'#16a34a':'var(--border2)'}">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
       <div>
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700">${cfg.name}</span>
           ${isActive?'<span class="badge badge-g" style="font-size:9px">AKTÍV</span>':''}
-          ${cfg.magic?`<span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;font-family:\'DM Mono\',monospace">Magic: ${cfg.magic}</span>`:''}
+          ${cfg.magic?`<span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;font-family:'DM Mono',monospace">Magic: ${cfg.magic}</span>`:''}
           ${cfg.tf?`<span class="badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-family:'DM Mono',monospace">${cfg.tf}</span>`:''}
           ${cfg.symbol?`<span class="badge" style="background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;font-family:'DM Mono',monospace">${cfg.symbol}</span>`:''}
           <span class="badge" style="background:var(--surface2);color:var(--text3);border:1px solid var(--border)">${cfg.acct==='both'?'Mindkét számla':cfg.acct+'. számla'}</span>
@@ -2191,15 +2257,11 @@ function robotConfigCard(cfg, compact){
         <button onclick="deleteRobotConfig('${cfg.id}')" style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:5px;padding:4px 8px;cursor:pointer;font-size:11px;color:var(--red)">✕</button>
       </div>
     </div>
-
-    <!-- Teljesítmény ezzel a configgal -->
     ${cfgTrades.length?`<div style="display:flex;gap:16px;padding:8px 12px;background:var(--surface2);border-radius:7px;margin-bottom:10px">
       <div style="font-family:'DM Mono',monospace;font-size:11px"><span style="color:var(--text3)">Trade-ek:</span> <strong>${cfgTrades.length}</strong></div>
       <div style="font-family:'DM Mono',monospace;font-size:11px"><span style="color:var(--text3)">Win Rate:</span> <strong class="${cfgWr>=50?'c-g':'c-r'}">${cfgWr.toFixed(1)}%</strong></div>
       <div style="font-family:'DM Mono',monospace;font-size:11px"><span style="color:var(--text3)">P&L:</span> <strong class="${cfgPnl>=0?'c-g':'c-r'}">${fmtUSD(cfgPnl)}</strong></div>
-    </div>`:'<div style="font-size:11px;color:var(--text3);font-family:\'DM Mono\',monospace;margin-bottom:8px">Még nincs trade ezzel a konfigurációval</div>'}
-
-    <!-- Paraméterek -->
+    </div>`:'<div style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;margin-bottom:8px">Még nincs trade ezzel a konfigurációval</div>'}
     <div style="display:flex;gap:6px;flex-wrap:wrap">
       ${p.riskPercent?`<span style="font-family:'DM Mono',monospace;font-size:10px;background:#f0fdf4;color:#15803d;padding:2px 8px;border-radius:4px;border:1px solid #bbf7d0">Risk: ${p.riskPercent}%</span>`:''}
       ${p.bodySizeMultiplicator?`<span style="font-family:'DM Mono',monospace;font-size:10px;background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">Body×${p.bodySizeMultiplicator}</span>`:''}
@@ -3093,6 +3155,9 @@ function getFiltered(){
     if(res==='be'&&Math.abs(t.net)>0.01)return false;
     return true;
   }).sort((a,b)=>{
+    // Nyitott pozíciók mindig felül
+    if(a.isOpen&&!b.isOpen)return -1;
+    if(!a.isOpen&&b.isOpen)return 1;
     const av=a[tSort.key],bv=b[tSort.key];
     return(av<bv?-1:av>bv?1:0)*tSort.dir;
   });
