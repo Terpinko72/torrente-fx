@@ -2245,7 +2245,7 @@ function loadSheetsCreds(){
   }catch(e){ return null; }
 }
 
-async async function syncFromSheets(){
+async function syncFromSheets(){
   const id   = document.getElementById('sheets-id').value.trim();
   const key  = document.getElementById('sheets-apikey') ? document.getElementById('sheets-apikey').value.trim() : '';
   const tab1 = document.getElementById('sheets-tab1').value.trim()||'Szamla1';
