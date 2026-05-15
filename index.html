@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Torrente FX — Kereskedési Napló</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -22,36 +22,36 @@
   --c1:#c47c1a;--c2:#2563eb;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
 .shell{display:flex;height:100vh;overflow:hidden}
 
 /* ── Sidebar ── */
-.sidebar{width:216px;flex-shrink:0;background:var(--text);display:flex;flex-direction:column;overflow-y:auto}
+.sidebar{width:240px;flex-shrink:0;background:#191919;display:flex;flex-direction:column;overflow-y:auto}
 .brand{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
-.brand-name{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;letter-spacing:-.5px;color:#fff}
-.brand-name em{color:#f0b429;font-style:normal}
-.brand-sub{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:3px}
+.brand-name{font-family:'Inter',sans-serif;font-size:17px;font-weight:800;letter-spacing:-.5px;color:#fff}
+.brand-name em{color:#2383e2;font-style:normal}
+.brand-sub{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:3px}
 
 /* account switcher */
 .acct-switch{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
-.acct-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:5px;padding:0 6px}
+.acct-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:5px;padding:0 6px}
 .acct-btn{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;cursor:pointer;transition:all .15s;margin-bottom:2px;border:1px solid transparent}
 .acct-btn:hover{background:rgba(255,255,255,.06)}
 .acct-btn.active{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.1)}
 .adot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.adot-1{background:#f0b429}.adot-2{background:#60a5fa}
+.adot-1{background:#e88231}.adot-2{background:#2383e2}
 .adot-both{background:conic-gradient(#f0b429 50%,#60a5fa 50%)}
 .acct-info{flex:1;min-width:0}
 .acct-name{font-size:13px;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.acct-num{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.55)}
+.acct-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.55)}
 
 .nav{flex:1;padding:8px 0}
 .nav-item{display:flex;align-items:center;gap:9px;padding:9px 18px;color:rgba(255,255,255,.55);font-size:14px;cursor:pointer;transition:all .15s;border-left:2px solid transparent;user-select:none}
 .nav-item:hover{color:rgba(255,255,255,.9);background:rgba(255,255,255,.04)}
-.nav-item.active{color:#fff;border-left-color:#f0b429;background:rgba(255,255,255,.06)}
+.nav-item.active{color:#fff;border-left-color:#2383e2;background:rgba(255,255,255,.08)}
 .nav-icon{font-size:13px;width:16px;text-align:center;flex-shrink:0}
 .sidebar-foot{padding:12px 18px;border-top:1px solid rgba(255,255,255,.07);flex-shrink:0}
-.foot-stat{font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,.22);line-height:2}
+.foot-stat{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.22);line-height:2}
 
 /* ── Main ── */
 .main{flex:1;overflow-y:auto;padding:26px 30px;min-width:0}
@@ -59,14 +59,14 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 .page.active{display:block;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
-.ph-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.5px}
-.ph-sub{font-size:12px;color:var(--text2);margin-top:3px;font-family:'DM Mono',monospace;font-weight:500}
+.ph-title{font-family:'Inter',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.5px}
+.ph-sub{font-size:12px;color:var(--text2);margin-top:3px;font-family:'JetBrains Mono',monospace;font-weight:500}
 
 /* ── KPIs ── */
 .kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:18px}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.kpi-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:7px;font-weight:600}
-.kpi-val{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.5px;line-height:1}
+.kpi{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:14px 16px;position:relative;overflow:hidden}
+.kpi-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:7px;font-weight:600}
+.kpi-val{font-family:'Inter',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.5px;line-height:1}
 .kpi-sub{font-size:11px;color:var(--text3);margin-top:4px}
 .kpi-bar{position:absolute;bottom:0;left:0;right:0;height:3px}
 
@@ -78,23 +78,23 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 .row2{display:grid;grid-template-columns:2fr 1fr;gap:13px;margin-bottom:13px}
 .row2b{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
 .row1{margin-bottom:13px}
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.panel-title{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:13px;font-weight:600}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+.panel-title{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:13px;font-weight:600}
 .chart-wrap{position:relative;width:100%}
 
 /* ── Tables ── */
-.tbl-wrap{overflow-x:auto;overflow-y:auto;max-height:70vh;border-radius:10px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tbl-wrap{overflow-x:auto;overflow-y:auto;max-height:70vh;border-radius:6px;border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse;font-size:13.5px;white-space:nowrap}
-thead th{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--text2);padding:11px 13px;border-bottom:2px solid var(--border2);text-align:left;cursor:pointer;background:var(--surface2);user-select:none;transition:color .15s;position:sticky;top:0;z-index:2;font-weight:600}
+thead th{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--text2);padding:11px 13px;border-bottom:2px solid var(--border2);text-align:left;cursor:pointer;background:var(--surface2);user-select:none;transition:color .15s;position:sticky;top:0;z-index:2;font-weight:600}
 thead th:hover{color:var(--accent)}
 tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
 tbody tr:last-child{border-bottom:none}
 tbody tr:hover{background:var(--surface2)}
 td{padding:9px 13px;vertical-align:middle;color:var(--text)}
-.mono{font-family:'DM Mono',monospace}.fw5{font-weight:500}
+.mono{font-family:'JetBrains Mono',monospace}.fw5{font-weight:500}
 
 /* ── Badges ── */
-.badge{font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+.badge{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:3px;font-weight:600;letter-spacing:.3px;white-space:nowrap}
 .badge-g{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
 .badge-r{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
 .badge-a{background:var(--accent-bg);color:var(--accent);border:1px solid #fcd34d}
@@ -111,12 +111,12 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 
 /* ── Filter bar ── */
 .fbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
-.fbar input,.fbar select,.finput{background:var(--surface);border:1px solid var(--border2);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .15s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.fbar input,.fbar select,.finput{background:var(--surface);border:1px solid var(--border2);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .15s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
 .fbar input:focus,.fbar select:focus,.finput:focus{border-color:var(--accent)}
 .fbar input{flex:1;min-width:150px}
 
 /* ── Buttons ── */
-.btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;border:none;border-radius:7px;padding:8px 15px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
+.btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;border:none;border-radius:7px;padding:8px 15px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
 .btn-outline{background:#fff;border:1px solid var(--border2);color:var(--text2);box-shadow:0 1px 2px rgba(0,0,0,.05)}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
 .btn-dark{background:var(--text);color:#fff}
@@ -128,33 +128,33 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 .btn-sm{padding:5px 10px;font-size:11px}
 
 /* ── Pagination ── */
-.pagebar{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)}
+.pagebar{display:flex;align-items:center;justify-content:space-between;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)}
 .page-btns{display:flex;gap:6px}
-.pbtn{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2);font-family:'DM Mono',monospace;transition:all .15s}
+.pbtn{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2);font-family:'JetBrains Mono',monospace;transition:all .15s}
 .pbtn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
 .pbtn:disabled{opacity:.3;cursor:default}
 
 /* ── DD stats ── */
 .dd3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:14px}
 .dds{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:13px 15px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
-.dds-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:5px}
-.dds-val{font-family:'Syne',sans-serif;font-size:20px;font-weight:700}
+.dds-label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:5px}
+.dds-val{font-family:'Inter',sans-serif;font-size:20px;font-weight:700}
 
 /* ── Balance page ── */
 .acct-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
 .acct-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 1px 4px rgba(0,0,0,.06);position:relative;overflow:hidden}
 .acct-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
-.card-1::before{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+.card-1::before{background:linear-gradient(90deg,#e88231,#f0a85a)}
 .card-2::before{background:linear-gradient(90deg,#3b82f6,#60a5fa)}
 .card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px}
-.card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700}
-.card-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
-.card-equity{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}
-.card-equity-sub{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;margin-bottom:18px}
+.card-title{font-family:'Inter',sans-serif;font-size:15px;font-weight:700}
+.card-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
+.card-equity{font-family:'Inter',sans-serif;font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}
+.card-equity-sub{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;margin-bottom:18px}
 .card-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
 .cs{background:var(--surface2);border-radius:7px;padding:10px 12px}
-.cs-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:4px}
-.cs-val{font-family:'Syne',sans-serif;font-size:17px;font-weight:700}
+.cs-label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:4px}
+.cs-val{font-family:'Inter',sans-serif;font-size:17px;font-weight:700}
 .card-actions{display:flex;gap:8px}
 
 /* ── Transaction modal ── */
@@ -162,11 +162,11 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 .modal-bg.open{opacity:1;pointer-events:all}
 .modal{background:var(--surface);border-radius:14px;padding:28px;width:380px;box-shadow:0 20px 60px rgba(0,0,0,.2);transform:translateY(8px);transition:transform .2s}
 .modal-bg.open .modal{transform:translateY(0)}
-.modal-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px}
-.modal-sub{font-size:12px;color:var(--text3);margin-bottom:20px;font-family:'DM Mono',monospace}
+.modal-title{font-family:'Inter',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px}
+.modal-sub{font-size:12px;color:var(--text3);margin-bottom:20px;font-family:'JetBrains Mono',monospace}
 .modal-field{margin-bottom:14px}
-.modal-label{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px}
-.modal-input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;font-size:16px;font-family:'Syne',sans-serif;font-weight:700;color:var(--text);outline:none;transition:border-color .15s}
+.modal-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px}
+.modal-input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;font-size:16px;font-family:'Inter',sans-serif;font-weight:700;color:var(--text);outline:none;transition:border-color .15s}
 .modal-input:focus{border-color:var(--accent)}
 .modal-btns{display:flex;gap:8px;margin-top:20px}
 .modal-btns .btn{flex:1;justify-content:center;padding:10px}
@@ -175,53 +175,53 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 .tx-list{max-height:220px;overflow-y:auto}
 .tx-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:12.5px}
 .tx-row:last-child{border-bottom:none}
-.tx-type{font-family:'DM Mono',monospace;font-size:9px;font-weight:500;padding:2px 7px;border-radius:3px}
+.tx-type{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;padding:2px 7px;border-radius:3px}
 .tx-dep{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
 .tx-wit{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
 .tx-pnl{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border)}
-.tx-date{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)}
-.tx-amt{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
+.tx-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)}
+.tx-amt{font-family:'Inter',sans-serif;font-size:14px;font-weight:700}
 
 /* ── Compare table ── */
 .cmp-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--border)}
 .cmp-row:last-child{border-bottom:none}
-.cmp-label{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);width:120px;flex-shrink:0}
+.cmp-label{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);width:120px;flex-shrink:0}
 .cmp-bars{flex:1;display:flex;flex-direction:column;gap:4px}
 .cmp-bar-row{display:flex;align-items:center;gap:6px}
 .cmp-bar-track{flex:1;height:5px;background:var(--surface3);border-radius:3px;overflow:hidden}
 .cmp-bar-fill{height:100%;border-radius:3px;transition:width .5s ease}
-.cmp-val{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;width:70px;text-align:right}
+.cmp-val{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;width:70px;text-align:right}
 .cmp-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 
 /* ── Import ── */
 .import-zone{border:2px dashed var(--border2);border-radius:14px;padding:44px 40px;text-align:center;transition:all .2s;cursor:pointer;background:var(--surface)}
 .import-zone:hover,.import-zone.over{border-color:var(--accent);background:var(--accent-bg)}
 .iz-icon{font-size:34px;margin-bottom:12px}
-.iz-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px}
+.iz-title{font-family:'Inter',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px}
 .iz-sub{color:var(--text2);font-size:13px;line-height:1.7;max-width:400px;margin:0 auto}
 .import-acct-btns{display:flex;gap:10px;justify-content:center;margin-bottom:16px}
-.iab{border:2px solid var(--border2);background:var(--surface);border-radius:9px;padding:10px 20px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;transition:all .15s;display:flex;align-items:center;gap:7px}
+.iab{border:2px solid var(--border2);background:var(--surface);border-radius:9px;padding:10px 20px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;transition:all .15s;display:flex;align-items:center;gap:7px}
 .iab:hover{border-color:var(--accent)}
 .iab.sel1{border-color:#f59e0b;background:#fef3c7;color:#92400e}
 .iab.sel2{border-color:#3b82f6;background:#dbeafe;color:#1e40af}
 
 .note{background:var(--accent-bg);border:1px solid #fcd34d55;border-radius:8px;padding:12px 15px;font-size:12px;color:#92400e;line-height:1.8;margin-top:14px}
-.note code{font-family:'DM Mono',monospace;background:rgba(0,0,0,.06);padding:1px 5px;border-radius:3px;font-size:11px}
+.note code{font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,.06);padding:1px 5px;border-radius:3px;font-size:11px}
 
 /* ── Sym colors ── */
 .sym-xau{color:#92400e;font-weight:600}.sym-eur{color:#1d4ed8;font-weight:600}
 .sym-d40{color:#6d28d9;font-weight:600}.sym-nas{color:#0f766e;font-weight:600}
 .sym-unk{color:var(--text2)}
-.empty-row{text-align:center;padding:30px 20px;color:var(--text3);font-family:'DM Mono',monospace;font-size:11px}
+.empty-row{text-align:center;padding:30px 20px;color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:11px}
 
 /* ── Calendar ── */
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.cal-month{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.5px}
+.cal-month{font-family:'Inter',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.5px}
 .cal-nav-btns{display:flex;gap:8px}
-.cal-nbtn{background:var(--surface);border:1px solid var(--border2);border-radius:7px;padding:6px 14px;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--text2);transition:all .15s}
+.cal-nbtn{background:var(--surface);border:1px solid var(--border2);border-radius:7px;padding:6px 14px;cursor:pointer;font-size:14px;font-family:'Inter',sans-serif;font-weight:500;color:var(--text2);transition:all .15s}
 .cal-nbtn:hover{border-color:var(--accent);color:var(--accent)}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.cal-dow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);text-align:center;padding:4px 0 8px}
+.cal-dow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);text-align:center;padding:4px 0 8px}
 .cal-cell{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;min-height:90px;cursor:pointer;transition:border-color .15s;display:flex;flex-direction:column;gap:2px}
 .cal-cell:hover{border-color:var(--accent)}
 .cal-cell.empty{background:transparent;border-color:transparent;cursor:default;pointer-events:none}
@@ -230,31 +230,31 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 .cal-cell.win-day{background:linear-gradient(135deg,#f0fdf4,#fff)}
 .cal-cell.loss-day{background:linear-gradient(135deg,#fef2f2,#fff)}
 .cal-cell.be-day{background:var(--surface)}
-.cal-day-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);font-weight:500}
-.cal-day-pnl{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:-.3px;line-height:1}
+.cal-day-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);font-weight:500}
+.cal-day-pnl{font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:-.3px;line-height:1}
 .cal-day-pnl.pos{color:var(--green)}.cal-day-pnl.neg{color:var(--red)}
-.cal-day-meta{font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);line-height:1.5}
+.cal-day-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);line-height:1.5}
 .cal-day-bar{height:3px;border-radius:2px;margin-top:auto;width:100%}
 /* Detail panel */
 .cal-detail{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);display:none}
 .cal-detail.open{display:block;animation:fadeIn .2s ease}
-.cal-detail-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}
-.cal-detail-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:16px}
+.cal-detail-title{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}
+.cal-detail-sub{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:16px}
 .cal-detail-stats{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)}
 .cal-ds{text-align:center}
-.cal-ds-val{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;line-height:1}
-.cal-ds-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-top:3px}
+.cal-ds-val{font-family:'Inter',sans-serif;font-size:18px;font-weight:700;line-height:1}
+.cal-ds-label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-top:3px}
 /* Monthly summary row */
 .cal-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
 .cal-sum-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px}
-.cal-sum-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:5px}
-.cal-sum-val{font-family:'Syne',sans-serif;font-size:18px;font-weight:700}
+.cal-sum-label{font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:5px}
+.cal-sum-val{font-family:'Inter',sans-serif;font-size:18px;font-weight:700}
 
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
 /* ── Tag badge-ek ── */
-.tag-badge{display:inline-flex;align-items:center;gap:3px;font-family:'DM Mono',monospace;font-size:9px;padding:2px 6px;border-radius:4px;margin:1px 2px;font-weight:500;white-space:nowrap}
+.tag-badge{display:inline-flex;align-items:center;gap:3px;font-family:'JetBrains Mono',monospace;font-size:9px;padding:2px 6px;border-radius:4px;margin:1px 2px;font-weight:500;white-space:nowrap}
 .tag-hírek-(news){background:#fef9c3;color:#854d0e;border:1px solid #fde047}
 .tag-robot-jel{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
 .tag-manuális-döntés{background:#f0fdf4;color:#166534;border:1px solid #86efac}
@@ -262,18 +262,18 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 .tag-érzelmi-döntés{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5}
 .tag-tervezett-trade{background:#f0fdfa;color:#134e4a;border:1px solid #99f6e4}
 /* tag selector */
-.exit-sel-btn{font-family:'DM Mono',monospace;font-size:10px;padding:4px 10px;border-radius:5px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;font-weight:500;transition:all .15s;color:var(--text2)}
+.exit-sel-btn{font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 10px;border-radius:5px;border:1px solid var(--border2);background:var(--surface);cursor:pointer;font-weight:500;transition:all .15s;color:var(--text2)}
 .exit-sel-btn:hover{border-color:var(--accent)}
 .exit-sel-btn.active{border-color:transparent}
-.tag-opt{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .15s;user-select:none}
+.tag-opt{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;font-size:12px;font-family:'Inter',sans-serif;transition:all .15s;user-select:none}
 .tag-opt:hover{border-color:var(--accent)}
 .tag-opt.active{border-color:var(--accent);background:var(--accent-bg);font-weight:500}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .open-pos-card{display:flex;align-items:center;gap:14px;padding:11px 14px;background:var(--surface2);border-radius:8px;margin-bottom:6px;border:1px solid var(--border)}
 .open-pos-card:last-child{margin-bottom:0}
-.opc-sym{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;min-width:120px}
-.opc-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
-.opc-stat{font-family:'DM Mono',monospace;font-size:11px;display:flex;flex-direction:column;gap:2px}
+.opc-sym{font-family:'Inter',sans-serif;font-size:14px;font-weight:700;min-width:120px}
+.opc-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
+.opc-stat{font-family:'JetBrains Mono',monospace;font-size:11px;display:flex;flex-direction:column;gap:2px}
 .opc-actions{margin-left:auto;display:flex;gap:6px}</style>
 </head>
 <body>
@@ -535,7 +535,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     <div class="panel" style="border-left:4px solid #16a34a">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
         <div style="width:8px;height:8px;border-radius:50%;background:#16a34a;animation:pulse 2s infinite"></div>
-        <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700">Aktív konfiguráció</span>
+        <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:700">Aktív konfiguráció</span>
       </div>
       <div id="robot-active-content"></div>
     </div>
@@ -552,6 +552,14 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
   <div class="modal" style="width:580px;max-height:90vh;overflow-y:auto">
     <div class="modal-title" id="robot-modal-title">+ Új Nomikomu konfiguráció</div>
     <div class="modal-sub">Rögzítsd a paramétereket az optimalizáláshoz</div>
+
+    <!-- Másolás alapja -->
+    <div style="background:var(--accent-bg);border:1px solid var(--blue-border);border-radius:6px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--blue);font-weight:600;white-space:nowrap">📋 Másolás alapja</span>
+      <select class="finput" id="rc-copy-from" style="flex:1;font-family:'JetBrains Mono',monospace;font-size:11px" onchange="copyRobotConfig(this.value)">
+        <option value="">— Töltsd be egy meglévő konfig paramétereit —</option>
+      </select>
+    </div>
 
     <!-- Alap infók -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
@@ -620,7 +628,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 
     <!-- Money Management -->
     <div style="background:var(--surface2);border-radius:8px;padding:14px;margin-bottom:14px">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px">Money Management</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px">Money Management</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
         <div><div class="modal-label">RiskPercent</div><input class="finput" id="rc-risk" type="number" step="0.1" placeholder="1.0" style="width:100%"></div>
         <div><div class="modal-label">fixedLotsize</div>
@@ -632,7 +640,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 
     <!-- Strategy Variations -->
     <div style="background:var(--surface2);border-radius:8px;padding:14px;margin-bottom:14px">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px">Strategy Variations</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px">Strategy Variations</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
         <label style="display:flex;align-items:center;gap:8px;font-size:12px;cursor:pointer;background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--border)">
           <input type="checkbox" id="rc-engulfingplus" style="accent-color:var(--accent);width:14px;height:14px"> EngulfingPlus
@@ -675,7 +683,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 
     <!-- Parameters -->
     <div style="background:var(--surface2);border-radius:8px;padding:14px;margin-bottom:14px">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px">Parameters</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px">Parameters</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
         <div><div class="modal-label">min_candlesize</div><input class="finput" id="rc-mincandle" type="number" placeholder="24" style="width:100%"></div>
         <div><div class="modal-label">max_candlesize</div><input class="finput" id="rc-maxcandle" type="number" placeholder="121" style="width:100%"></div>
@@ -711,7 +719,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 
     <!-- SuperTrend -->
     <div style="background:var(--surface2);border-radius:8px;padding:14px;margin-bottom:14px">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px">SuperTrend & Awesome Oscillator</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:12px">SuperTrend & Awesome Oscillator</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px">
         <div><div class="modal-label">Awesome Oscillator filter</div>
           <select class="finput" id="rc-aofilter" style="width:100%">
@@ -772,7 +780,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
       <button class="btn btn-outline" onclick="lsReload()" style="border-color:var(--green);color:var(--green)">↺ Újratöltés böngészőből</button>
       <button class="btn btn-outline" onclick="lsClear()" style="color:var(--red)">🗑 Böngésző adatok törlése</button>
     </div>
-    <div style="margin-top:10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)" id="ls-save-time">
+    <div style="margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)" id="ls-save-time">
       Az adatok automatikusan mentődnek a böngészőbe — legközelebb is elérhetők lesznek
     </div>
   </div>
@@ -781,8 +789,8 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
   <div class="panel row1" style="border-top:3px solid var(--accent)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <div>
-        <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700">CSV feltöltés</div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:3px">A számlaszámot a CSV-ből olvassa be automatikusan</div>
+        <div style="font-family:'Inter',sans-serif;font-size:15px;font-weight:700">CSV feltöltés</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-top:3px">A számlaszámot a CSV-ből olvassa be automatikusan</div>
       </div>
       <div style="display:flex;gap:8px">
         <button class="btn btn-outline btn-sm" style="color:var(--red)" onclick="clearAllAccts()">Mindkét számla törlése</button>
@@ -802,14 +810,14 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     <!-- Betöltött számlák státusza -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
       <div style="background:var(--surface2);border-radius:8px;padding:12px 14px;border-left:3px solid #f59e0b">
-        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:4px">1. Számla</div>
-        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700" id="imp-stat-1">Nincs adat</div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px" id="imp-acctnum-1">—</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:4px">1. Számla</div>
+        <div style="font-family:'Inter',sans-serif;font-size:13px;font-weight:700" id="imp-stat-1">Nincs adat</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px" id="imp-acctnum-1">—</div>
       </div>
       <div style="background:var(--surface2);border-radius:8px;padding:12px 14px;border-left:3px solid #3b82f6">
-        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:4px">2. Számla</div>
-        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700" id="imp-stat-2">Nincs adat</div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px" id="imp-acctnum-2">—</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:4px">2. Számla</div>
+        <div style="font-family:'Inter',sans-serif;font-size:13px;font-weight:700" id="imp-stat-2">Nincs adat</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px" id="imp-acctnum-2">—</div>
       </div>
     </div>
   </div>
@@ -825,41 +833,41 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
       <span style="font-size:22px">✈️</span>
       <div>
-        <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700">Telegram → Google Sheets Sync</div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)">Valós idejű trade adatok szinkronizálása — ingyenes</div>
+        <div style="font-family:'Inter',sans-serif;font-size:15px;font-weight:700">Telegram → Google Sheets Sync</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)">Valós idejű trade adatok szinkronizálása — ingyenes</div>
       </div>
     </div>
 
     <div style="display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:14px">
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Google Sheets ID</div>
-        <input class="finput" id="sheets-id" type="text" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms" style="width:100%;font-family:'DM Mono',monospace;font-size:11px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Google Sheets ID</div>
+        <input class="finput" id="sheets-id" type="text" placeholder="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms" style="width:100%;font-family:'JetBrains Mono',monospace;font-size:11px">
       </div>
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Google API Key</div>
-        <input class="finput" id="sheets-apikey" type="text" placeholder="AIzaSy..." style="width:100%;font-family:'DM Mono',monospace;font-size:11px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Google API Key</div>
+        <input class="finput" id="sheets-apikey" type="text" placeholder="AIzaSy..." style="width:100%;font-family:'JetBrains Mono',monospace;font-size:11px">
       </div>
     </div>
 
     <!-- Lap nevek -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">
           <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f59e0b;margin-right:4px"></span>1. számla — lap neve
         </div>
-        <input class="finput" id="sheets-tab1" type="text" placeholder="Számla1" style="width:100%;font-family:'DM Mono',monospace;font-size:11px" value="Számla1">
+        <input class="finput" id="sheets-tab1" type="text" placeholder="Számla1" style="width:100%;font-family:'JetBrains Mono',monospace;font-size:11px" value="Számla1">
       </div>
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">
           <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#3b82f6;margin-right:4px"></span>2. számla — lap neve
         </div>
-        <input class="finput" id="sheets-tab2" type="text" placeholder="Számla2" style="width:100%;font-family:'DM Mono',monospace;font-size:11px" value="Számla2">
+        <input class="finput" id="sheets-tab2" type="text" placeholder="Számla2" style="width:100%;font-family:'JetBrains Mono',monospace;font-size:11px" value="Számla2">
       </div>
     </div>
 
     <!-- Progress -->
     <div id="sync-progress-wrap" style="display:none;margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:5px">
+      <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:5px">
         <span id="sync-progress-label">Szinkronizálás...</span>
         <span id="sync-last-time"></span>
       </div>
@@ -892,14 +900,14 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
       <span style="font-size:22px">🔲</span>
       <div>
-        <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700">Notion Export</div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)">CSV exportálás → Notionba importálás</div>
+        <div style="font-family:'Inter',sans-serif;font-size:15px;font-weight:700">Notion Export</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3)">CSV exportálás → Notionba importálás</div>
       </div>
     </div>
 
     <!-- Scope selector -->
     <div style="margin-bottom:16px">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:8px">Mit exportálsz?</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:8px">Mit exportálsz?</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;background:var(--surface2);padding:6px 12px;border-radius:7px;border:1px solid var(--border2)">
           <input type="radio" name="notion-scope" value="both" checked> Mindkét számla
@@ -928,22 +936,22 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 
     <!-- Haladó: API szinkronizáció (összecsukható) -->
     <details style="margin-top:16px">
-      <summary style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);cursor:pointer;user-select:none">
+      <summary style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);cursor:pointer;user-select:none">
         ▸ Haladó: közvetlen API szinkronizáció (opcionális)
       </summary>
       <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
           <div>
-            <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Integration Token</div>
-            <input class="finput" type="password" id="notion-token" placeholder="secret_xxxxxxxxxxxxxxxx" style="width:100%;font-family:'DM Mono',monospace;font-size:12px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Integration Token</div>
+            <input class="finput" type="password" id="notion-token" placeholder="secret_xxxxxxxxxxxxxxxx" style="width:100%;font-family:'JetBrains Mono',monospace;font-size:12px">
           </div>
           <div>
-            <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Parent Page ID</div>
-            <input class="finput" type="text" id="notion-page" placeholder="32 karakteres Page ID" style="width:100%;font-family:'DM Mono',monospace;font-size:12px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Parent Page ID</div>
+            <input class="finput" type="text" id="notion-page" placeholder="32 karakteres Page ID" style="width:100%;font-family:'JetBrains Mono',monospace;font-size:12px">
           </div>
         </div>
         <div id="notion-progress-wrap" style="display:none;margin-bottom:12px">
-          <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:5px">
+          <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-bottom:5px">
             <span id="notion-progress-label">Feltöltés...</span>
             <span id="notion-progress-pct">0%</span>
           </div>
@@ -970,7 +978,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
   <div class="modal" style="width:440px">
     <div class="modal-title">📋 Számlaszám hozzárendelés</div>
     <div class="modal-sub" id="acct-assign-sub">A CSV-ben nem találtunk számlaszám oszlopot.</div>
-    <div style="background:var(--surface2);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);line-height:1.7">
+    <div style="background:var(--surface2);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);line-height:1.7">
       Rendeld hozzá a számlaszámokat manuálisan, vagy hagyd üresen ha csak egy számlád van ebben a fájlban.
     </div>
     <div id="acct-assign-rows" style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px"></div>
@@ -988,10 +996,10 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     <div class="modal-sub" id="note-modal-sub">—</div>
 
     <!-- Trade összefoglaló -->
-    <div id="note-trade-summary" style="background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);display:flex;gap:16px;flex-wrap:wrap"></div>
+    <div id="note-trade-summary" style="background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2);display:flex;gap:16px;flex-wrap:wrap"></div>
 
     <!-- Zárás típusa -->
-    <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px;margin-top:14px">Zárás típusa</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px;margin-top:14px">Zárás típusa</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px" id="note-exit-btns">
       <button class="exit-sel-btn" data-exit="manual"   onclick="selectExit(this)">MAN</button>
       <button class="exit-sel-btn" data-exit="tp"       onclick="selectExit(this)">TP ✓</button>
@@ -1003,7 +1011,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     </div>
 
     <!-- Tag-ek -->
-    <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Tag-ek</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px">Tag-ek</div>
     <div class="tag-sel" id="note-tags">
       <div class="tag-opt" data-tag="Hírek (News)" onclick="toggleTag(this)">📰 Hírek</div>
       <div class="tag-opt" data-tag="Robot jel" onclick="toggleTag(this)">🤖 Robot jel</div>
@@ -1014,8 +1022,8 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     </div>
 
     <!-- Szabad szöveges megjegyzés -->
-    <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px;margin-top:14px">Szabad megjegyzés</div>
-    <textarea id="note-text" rows="4" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);resize:vertical;outline:none;transition:border-color .15s" placeholder="Pl.: NFP előtt nyitottam, erős trend, hír utáni volatilitás..."></textarea>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:6px;margin-top:14px">Szabad megjegyzés</div>
+    <textarea id="note-text" rows="4" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;font-size:13px;font-family:'Inter',sans-serif;color:var(--text);resize:vertical;outline:none;transition:border-color .15s" placeholder="Pl.: NFP előtt nyitottam, erős trend, hír utáni volatilitás..."></textarea>
 
     <div class="modal-btns" style="margin-top:14px">
       <button class="btn btn-outline" onclick="closeNoteModal()">Mégse</button>
@@ -1107,7 +1115,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 
     <!-- Nyitás -->
     <div style="background:var(--surface2);border-radius:8px;padding:12px;margin-bottom:10px">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:8px">Nyitás</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);margin-bottom:8px">Nyitás</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
         <div>
           <div class="modal-label">Dátum és idő</div>
@@ -1137,7 +1145,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     <!-- Zárás -->
     <div style="background:var(--surface2);border-radius:8px;padding:12px;margin-bottom:10px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)">Zárás</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)">Zárás</div>
         <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
           <input type="checkbox" id="tm-open-pos" onchange="toggleOpenPos()"> Nyitott pozíció (még nem zárult)
         </label>
@@ -1189,7 +1197,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     </div>
 
     <!-- Nettó előnézet -->
-    <div id="tm-preview" style="background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-family:'DM Mono',monospace;font-size:12px;display:none">
+    <div id="tm-preview" style="background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-family:'JetBrains Mono',monospace;font-size:12px;display:none">
       Nettó P&L: <strong id="tm-preview-net" style="font-size:15px"></strong>
       &nbsp;·&nbsp; R:R: <strong id="tm-preview-rr"></strong>
     </div>
@@ -1212,7 +1220,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     </div>
     <div class="modal-field">
       <div class="modal-label">Dátum</div>
-      <input class="finput" type="date" id="modal-date" style="width:100%;font-family:'DM Mono',monospace;font-size:14px;padding:10px 14px">
+      <input class="finput" type="date" id="modal-date" style="width:100%;font-family:'JetBrains Mono',monospace;font-size:14px;padding:10px 14px">
     </div>
     <div class="modal-field">
       <div class="modal-label">Megjegyzés (opcionális)</div>
@@ -1575,12 +1583,12 @@ function showOverwriteModal(acctNum, total){
       <button class="btn btn-dark" style="flex:1" onclick="overwriteSlot('1')">
         <div class="adot adot-1" style="display:inline-block;margin-right:6px"></div>
         1. számla felülírása<br>
-        <span style="font-family:'DM Mono',monospace;font-size:10px;opacity:.7">${ACCTS['1'].name} (${ACCTS['1'].trades.length} trade)</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.7">${ACCTS['1'].name} (${ACCTS['1'].trades.length} trade)</span>
       </button>
       <button class="btn btn-dark" style="flex:1" onclick="overwriteSlot('2')">
         <div class="adot adot-2" style="display:inline-block;margin-right:6px"></div>
         2. számla felülírása<br>
-        <span style="font-family:'DM Mono',monospace;font-size:10px;opacity:.7">${ACCTS['2'].name} (${ACCTS['2'].trades.length} trade)</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.7">${ACCTS['2'].name} (${ACCTS['2'].trades.length} trade)</span>
       </button>
     </div>`;
   document.getElementById('acct-assign-bg').classList.add('open');
@@ -1604,14 +1612,14 @@ function showAssignModal(total){
         <div class="adot adot-1"></div>
         <span style="font-weight:600;font-size:13px">1. Számla számlaszáma</span>
       </div>
-      <input class="finput" id="assign-num-1" type="text" placeholder="pl. 12345678 (üresen hagyva = összes ide kerül)" style="width:100%;font-family:'DM Mono',monospace">
+      <input class="finput" id="assign-num-1" type="text" placeholder="pl. 12345678 (üresen hagyva = összes ide kerül)" style="width:100%;font-family:'JetBrains Mono',monospace">
     </div>
     <div style="background:var(--surface2);border-radius:8px;padding:14px;border-left:3px solid #3b82f6">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
         <div class="adot adot-2"></div>
         <span style="font-weight:600;font-size:13px">2. Számla számlaszáma</span>
       </div>
-      <input class="finput" id="assign-num-2" type="text" placeholder="pl. 87654321 (opcionális)" style="width:100%;font-family:'DM Mono',monospace">
+      <input class="finput" id="assign-num-2" type="text" placeholder="pl. 87654321 (opcionális)" style="width:100%;font-family:'JetBrains Mono',monospace">
     </div>`;
   document.getElementById('acct-assign-bg').classList.add('open');
 }
@@ -1900,12 +1908,87 @@ const MAGIC_COLORS={
 function magicBadge(magic){
   if(!magic||magic==='—') return '—';
   const style=MAGIC_COLORS[String(magic)]||'background:#f1f5f9;color:#475569;border:1px solid #e2e8f0';
-  return '<span style="font-family:DM Mono,monospace;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;'+style+'">'+magic+'</span>';
+  return '<span style="font-family:JetBrains Mono,monospace;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;'+style+'">'+magic+'</span>';
 }
 
 const ROBOT_BOOL_PARAMS = ['engulfingplus','enteralltradesatonce','use_tp','movesltobe',
   'rsi_slowdown','rsi_reversal','use_atr_filter','use_trailing_stop','use_ma',
   'use_atr_min_candlesize','use_reverse_strategy','pendingstopatlimitprice'];
+
+function updateCopyFromDropdown(){
+  const sel = document.getElementById('rc-copy-from');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">— Töltsd be egy meglévő konfig paramétereit —</option>';
+  // Group by magic number
+  const byMagic = {};
+  ROBOT_CONFIGS.forEach(cfg => {
+    const m = cfg.magic || 'nincs';
+    if(!byMagic[m]) byMagic[m] = [];
+    byMagic[m].push(cfg);
+  });
+  Object.keys(byMagic).sort().forEach(magic => {
+    const grp = document.createElement('optgroup');
+    grp.label = 'Magic: ' + magic;
+    byMagic[magic].forEach(cfg => {
+      const opt = document.createElement('option');
+      opt.value = cfg.id;
+      const today = new Date();
+      const isActive = !cfg.to || new Date(cfg.to) >= today;
+      const status = isActive ? '🟢' : '⚫';
+      opt.textContent = status + ' ' + cfg.name + ' (' + (cfg.from||'?') + (cfg.to?' → '+cfg.to:' → aktív') + ')';
+      grp.appendChild(opt);
+    });
+    sel.appendChild(grp);
+  });
+}
+
+function copyRobotConfig(fromId){
+  if(!fromId) return;
+  const src = ROBOT_CONFIGS.find(c=>c.id===fromId);
+  if(!src) return;
+  const p = src.params || {};
+  // Csak a paramétereket töltjük be — nevet, dátumot nem
+  document.getElementById('rc-acct').value = src.acct||'both';
+  document.getElementById('rc-magic').value = src.magic||'';
+  document.getElementById('rc-tf').value = src.tf||'';
+  const symSel = document.getElementById('rc-symbol');
+  const knownSyms = ['XAUUSDs','EURUSD.ecn','GBPUSD.ecn','D40EUR.ecn','NASUSD.ecn','USDJPY.ecn','GBPJPY.ecn',''];
+  if(src.symbol && !knownSyms.includes(src.symbol)){
+    symSel.value = 'custom';
+    document.getElementById('rc-symbol-custom').value = src.symbol;
+    document.getElementById('rc-symbol-custom-wrap').style.display = 'block';
+  } else {
+    symSel.value = src.symbol||'';
+    document.getElementById('rc-symbol-custom-wrap').style.display = 'none';
+  }
+  document.getElementById('rc-risk').value      = p.riskPercent||'';
+  document.getElementById('rc-fixedlot').value  = p.fixedLotsize||'false';
+  document.getElementById('rc-bodysize').value  = p.bodySizeMultiplicator||'';
+  document.getElementById('rc-mincandle').value = p.min_candlesize||'';
+  document.getElementById('rc-maxcandle').value = p.max_candlesize||'';
+  document.getElementById('rc-spread').value    = p.max_Spread||'';
+  document.getElementById('rc-lookback').value  = p.lookback||'';
+  document.getElementById('rc-maxrsi').value    = p.max_RSI_filter||'';
+  document.getElementById('rc-minrsi').value    = p.min_RSI_filter||'';
+  document.getElementById('rc-rsilong').value   = p.RSI_exit_long||'';
+  document.getElementById('rc-rsishort').value  = p.RSI_exit_short||'';
+  document.getElementById('rc-pendingshift').value = p.pendingStopShiftPoint||'';
+  document.getElementById('rc-matf').value      = p.MA_TF||'';
+  document.getElementById('rc-maperiod').value  = p.ma_period||'';
+  document.getElementById('rc-aofilter').value  = p.AO_filter||'Disabled';
+  document.getElementById('rc-stfilter').value  = p.ST_filter||'Disabled';
+  document.getElementById('rc-stperiod').value  = p.ST_period||'';
+  document.getElementById('rc-statr').value     = p.ST_ATR_multiplier||'';
+  document.getElementById('rc-stprice').value   = p.ST_price_source||'High price';
+  document.getElementById('rc-stwicks').value   = p.ST_include_wicks||'false';
+  ROBOT_BOOL_PARAMS.forEach(bp=>{
+    const el = document.getElementById('rc-'+bp);
+    if(el) el.checked = p[bp]===true||p[bp]==='true';
+  });
+  // Reset dropdown
+  document.getElementById('rc-copy-from').value = '';
+  toast('Paraméterek betöltve: ' + src.name + ' ✓', 'ok');
+}
 
 function openRobotModal(configId=null){
   editingRobotId = configId;
@@ -1978,6 +2061,7 @@ function openRobotModal(configId=null){
       if(el) el.checked = defaults[bp]||false;
     });
   }
+  updateCopyFromDropdown();
   document.getElementById('robot-modal-bg').classList.add('open');
 }
 
@@ -2147,7 +2231,7 @@ function renderRobotPage(){
     return;
   }
   wrap.innerHTML=`<details style="margin-top:8px">
-    <summary style="font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);cursor:pointer;user-select:none;padding:8px 0">
+    <summary style="font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);cursor:pointer;user-select:none;padding:8px 0">
       ▸ Korábbi konfigurációk (${passiveConfigs.length} db)
     </summary>
     <div style="margin-top:10px">
@@ -2177,14 +2261,14 @@ function robotConfigCard(cfg, compact){
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
       <div>
         <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700">${cfg.name}</span>
+          <span style="font-family:'Inter',sans-serif;font-size:15px;font-weight:700">${cfg.name}</span>
           ${isActive?'<span class="badge badge-g" style="font-size:9px">AKTÍV</span>':''}
           ${cfg.magic?`<span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;font-family:\'DM Mono\',monospace">Magic: ${cfg.magic}</span>`:''}
-          ${cfg.tf?`<span class="badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-family:'DM Mono',monospace">${cfg.tf}</span>`:''}
-          ${cfg.symbol?`<span class="badge" style="background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;font-family:'DM Mono',monospace">${cfg.symbol}</span>`:''}
+          ${cfg.tf?`<span class="badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-family:'JetBrains Mono',monospace">${cfg.tf}</span>`:''}
+          ${cfg.symbol?`<span class="badge" style="background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;font-family:'JetBrains Mono',monospace">${cfg.symbol}</span>`:''}
           <span class="badge" style="background:var(--surface2);color:var(--text3);border:1px solid var(--border)">${cfg.acct==='both'?'Mindkét számla':cfg.acct+'. számla'}</span>
         </div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:4px">${fromStr} → ${toStr}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-top:4px">${fromStr} → ${toStr}</div>
       </div>
       <div style="display:flex;gap:6px">
         <button onclick="openRobotModal('${cfg.id}')" style="background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:4px 8px;cursor:pointer;font-size:11px">✏</button>
@@ -2194,17 +2278,17 @@ function robotConfigCard(cfg, compact){
 
     <!-- Teljesítmény ezzel a configgal -->
     ${cfgTrades.length?`<div style="display:flex;gap:16px;padding:8px 12px;background:var(--surface2);border-radius:7px;margin-bottom:10px">
-      <div style="font-family:'DM Mono',monospace;font-size:11px"><span style="color:var(--text3)">Trade-ek:</span> <strong>${cfgTrades.length}</strong></div>
-      <div style="font-family:'DM Mono',monospace;font-size:11px"><span style="color:var(--text3)">Win Rate:</span> <strong class="${cfgWr>=50?'c-g':'c-r'}">${cfgWr.toFixed(1)}%</strong></div>
-      <div style="font-family:'DM Mono',monospace;font-size:11px"><span style="color:var(--text3)">P&L:</span> <strong class="${cfgPnl>=0?'c-g':'c-r'}">${fmtUSD(cfgPnl)}</strong></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px"><span style="color:var(--text3)">Trade-ek:</span> <strong>${cfgTrades.length}</strong></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px"><span style="color:var(--text3)">Win Rate:</span> <strong class="${cfgWr>=50?'c-g':'c-r'}">${cfgWr.toFixed(1)}%</strong></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px"><span style="color:var(--text3)">P&L:</span> <strong class="${cfgPnl>=0?'c-g':'c-r'}">${fmtUSD(cfgPnl)}</strong></div>
     </div>`:'<div style="font-size:11px;color:var(--text3);font-family:\'DM Mono\',monospace;margin-bottom:8px">Még nincs trade ezzel a konfigurációval</div>'}
 
     <!-- Paraméterek -->
     <div style="display:flex;gap:6px;flex-wrap:wrap">
-      ${p.riskPercent?`<span style="font-family:'DM Mono',monospace;font-size:10px;background:#f0fdf4;color:#15803d;padding:2px 8px;border-radius:4px;border:1px solid #bbf7d0">Risk: ${p.riskPercent}%</span>`:''}
-      ${p.bodySizeMultiplicator?`<span style="font-family:'DM Mono',monospace;font-size:10px;background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">Body×${p.bodySizeMultiplicator}</span>`:''}
-      ${p.min_candlesize?`<span style="font-family:'DM Mono',monospace;font-size:10px;background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">Candle: ${p.min_candlesize}–${p.max_candlesize}</span>`:''}
-      ${boolParams.map(bp=>`<span style="font-family:'DM Mono',monospace;font-size:10px;background:#eff6ff;color:#1d4ed8;padding:2px 8px;border-radius:4px;border:1px solid #bfdbfe">${bp}: ✓</span>`).join('')}
+      ${p.riskPercent?`<span style="font-family:'JetBrains Mono',monospace;font-size:10px;background:#f0fdf4;color:#15803d;padding:2px 8px;border-radius:4px;border:1px solid #bbf7d0">Risk: ${p.riskPercent}%</span>`:''}
+      ${p.bodySizeMultiplicator?`<span style="font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">Body×${p.bodySizeMultiplicator}</span>`:''}
+      ${p.min_candlesize?`<span style="font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--surface2);color:var(--text2);padding:2px 8px;border-radius:4px;border:1px solid var(--border)">Candle: ${p.min_candlesize}–${p.max_candlesize}</span>`:''}
+      ${boolParams.map(bp=>`<span style="font-family:'JetBrains Mono',monospace;font-size:10px;background:#eff6ff;color:#1d4ed8;padding:2px 8px;border-radius:4px;border:1px solid #bfdbfe">${bp}: ✓</span>`).join('')}
     </div>
     ${cfg.note?`<div style="margin-top:8px;font-size:12px;color:var(--text2);font-style:italic">"${cfg.note}"</div>`:''}
   </div>`;
@@ -2894,7 +2978,7 @@ function renderBalance(){
       </div>
       <div style="margin-bottom:8px">
         <span style="
-          font-family:'Syne',sans-serif;
+          font-family:'Inter',sans-serif;
           font-size:32px;
           font-weight:800;
           letter-spacing:-1px;
@@ -2903,16 +2987,16 @@ function renderBalance(){
       </div>
       <div style="display:flex;gap:16px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)">
         <div>
-          <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)">Befizetett tőke</div>
-          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-top:2px">€${fmtNum(dep)}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)">Befizetett tőke</div>
+          <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;margin-top:2px">€${fmtNum(dep)}</div>
         </div>
         <div>
-          <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)">Trade P&L</div>
-          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-top:2px;color:${tradePnl>=0?'var(--green)':'var(--red)'}">${fmtUSD(tradePnl)}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)">Trade P&L</div>
+          <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;margin-top:2px;color:${tradePnl>=0?'var(--green)':'var(--red)'}">${fmtUSD(tradePnl)}</div>
         </div>
         ${wit>0?`<div>
-          <div style="font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)">Kifizetve</div>
-          <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-top:2px;color:var(--red)">-€${fmtNum(wit)}</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--text3)">Kifizetve</div>
+          <div style="font-family:'Inter',sans-serif;font-size:16px;font-weight:700;margin-top:2px;color:var(--red)">-€${fmtNum(wit)}</div>
         </div>`:''}
       </div>
       <div class="card-stats">
@@ -2986,9 +3070,9 @@ function renderBalance(){
 
     el.innerHTML=`
       <div style="display:flex;gap:16px;padding:8px 0 12px;border-bottom:1px solid var(--border);margin-bottom:4px">
-        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--green)">↑ Befizetések: +€${fmtNum(totalDep)}</span>
-        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--red)">↓ Kifizetések: -€${fmtNum(totalWit)}</span>
-        <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text2)">Nettó: ${fmtUSD(totalDep-totalWit)}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--green)">↑ Befizetések: +€${fmtNum(totalDep)}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--red)">↓ Kifizetések: -€${fmtNum(totalWit)}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2)">Nettó: ${fmtUSD(totalDep-totalWit)}</span>
       </div>
       ${txs.map((tx,i)=>{
         const d=tx.date instanceof Date?tx.date:new Date(tx.date);
@@ -3131,8 +3215,8 @@ function renderOpenPositions(){
         ${dirBadge} ${acctBadge} ${sessStr}
       </div>
       <div class="opc-stat">
-        <span style="font-family:'DM Mono',monospace;font-size:12px">Nyitó: <strong>${t.open}</strong></span>
-        <div style="display:flex;gap:10px;font-family:'DM Mono',monospace;font-size:11px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px">Nyitó: <strong>${t.open}</strong></span>
+        <div style="display:flex;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11px">
           ${slStr} ${tpStr}
         </div>
       </div>
@@ -3271,7 +3355,7 @@ function renderDrawdown(){
 // ════════════════════════════════════════════════════════
 //  CHART HELPERS
 // ════════════════════════════════════════════════════════
-Chart.defaults.color='#a09890';Chart.defaults.font.family="'DM Mono',monospace";Chart.defaults.font.size=10;
+Chart.defaults.color='#787774';Chart.defaults.font.family="'JetBrains Mono',monospace";Chart.defaults.font.size=10;
 function chartOpts(inv,yFmt,showLegend){
   const fmt = typeof yFmt === 'function' ? yFmt : v=>'€'+v;
   return{responsive:true,maintainAspectRatio:false,
@@ -3388,10 +3472,10 @@ function renderYearView(){
     const isNow = new Date().getFullYear()===calYear && new Date().getMonth()===m;
     monthsHtml+=`<div onclick="calMonth=${m};setCalView('month')" style="background:var(--surface);border:1.5px solid ${isNow?'var(--accent)':'var(--border)'};border-radius:10px;padding:12px;cursor:pointer;transition:border-color .15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='${isNow?'var(--accent)':'var(--border)'}'">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700">${HU_SHORT[m]}</span>
-        ${mTrades.length?`<span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:${mPnl>=0?'var(--green)':'var(--red)'}">${mPnl>=0?'+':''}€${Math.abs(mPnl).toFixed(0)}</span>`:'<span style="color:var(--text3);font-size:11px">—</span>'}
+        <span style="font-family:'Inter',sans-serif;font-size:13px;font-weight:700">${HU_SHORT[m]}</span>
+        ${mTrades.length?`<span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:800;color:${mPnl>=0?'var(--green)':'var(--red)'}">${mPnl>=0?'+':''}€${Math.abs(mPnl).toFixed(0)}</span>`:'<span style="color:var(--text3);font-size:11px">—</span>'}
       </div>
-      ${mTrades.length?`<div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px">${mTrades.length} trade · <span style="color:var(--green)">${mWin}W</span> <span style="color:var(--red)">${mLoss}L</span></div>`:''}
+      ${mTrades.length?`<div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px">${mTrades.length} trade · <span style="color:var(--green)">${mWin}W</span> <span style="color:var(--red)">${mLoss}L</span></div>`:''}
       ${miniGrid}
     </div>`;
   }
@@ -3400,7 +3484,7 @@ function renderYearView(){
   // Éves navigáció
   const navHtml = `<div style="display:flex;gap:8px;margin-bottom:14px;align-items:center">
     <button class="cal-nbtn" onclick="calYear--;renderYearView()">← ${calYear-1}</button>
-    <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin:0 8px">${calYear}</span>
+    <span style="font-family:'Inter',sans-serif;font-size:18px;font-weight:800;margin:0 8px">${calYear}</span>
     <button class="cal-nbtn" onclick="calYear++;renderYearView()">${calYear+1} →</button>
   </div>`;
 
@@ -3484,7 +3568,7 @@ function renderCalendar(){
     const hasDep=dayTxs.some(t=>t.type==='deposit');
     const hasWit=dayTxs.some(t=>t.type==='withdrawal');
     const txBadge=hasDep||hasWit?`<span style="font-size:10px">${hasDep?'💰':''}${hasWit?'💸':''}</span>`:'';
-    const txDetail=dayTxs.map(tx=>`<div style="font-family:'DM Mono',monospace;font-size:9px;font-weight:700;${tx.type==='deposit'?'color:#16a34a':'color:#dc2626'}">${tx.type==='deposit'?'↑ Befizetés':'↓ Kifizetés'} €${tx.amt.toFixed(0)}</div>`).join('');
+    const txDetail=dayTxs.map(tx=>`<div style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;${tx.type==='deposit'?'color:#16a34a':'color:#dc2626'}">${tx.type==='deposit'?'↑ Befizetés':'↓ Kifizetés'} €${tx.amt.toFixed(0)}</div>`).join('');
 
         // Mini heatmap az éves nézethez hasonló stílusban
     const dInMonth = new Date(calYear, calMonth+1, 0).getDate();
@@ -3499,14 +3583,14 @@ function renderCalendar(){
       onmouseout="this.style.borderColor='${isToday?'var(--accent)':''}'"
       style="${isToday?'border-color:var(--accent);border-width:2px;':''}${isWeekend?'opacity:.6':''}">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700">${d}${isToday?` <span style="color:var(--accent);font-size:9px">·ma</span>`:''}</span>
+        <span style="font-family:'Inter',sans-serif;font-size:13px;font-weight:700">${d}${isToday?` <span style="color:var(--accent);font-size:9px">·ma</span>`:''}</span>
         ${txBadge}
       </div>
       ${hasTrades?`
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:2px">
-          <span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:${pnl>=0?'var(--green)':'var(--red)'}">${pnl>=0?'+':''}€${Math.abs(pnl).toFixed(2)}</span>
+          <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:800;color:${pnl>=0?'var(--green)':'var(--red)'}">${pnl>=0?'+':''}€${Math.abs(pnl).toFixed(2)}</span>
         </div>
-        <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px">${trades.length} trade · <span style="color:var(--green)">${wins}W</span>${losses>0?` <span style="color:var(--red)">${losses}L</span>`:''}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:2px">${trades.length} trade · <span style="color:var(--green)">${wins}W</span>${losses>0?` <span style="color:var(--red)">${losses}L</span>`:''}</div>
         ${txDetail}
         <div style="margin-top:auto;padding-top:4px">
           <div style="height:3px;border-radius:2px;background:${barColor};width:${barW}%;min-width:20%;transition:width .3s"></div>
