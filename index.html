@@ -10,19 +10,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
-  --bg:#f0eee9;--surface:#fff;--surface2:#f7f5f1;--surface3:#eceae4;
-  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.18);
-  --text:#1a1814;--text2:#3d3a36;--text3:#6b6560;
-  --accent:#c47c1a;--accent-bg:#fdf3e3;
-  --green:#16a34a;--green-bg:#f0fdf4;--green-border:#86efac;
-  --red:#dc2626;--red-bg:#fef2f2;--red-border:#fca5a5;
-  --blue:#2563eb;--blue-bg:#eff6ff;--blue-border:#93c5fd;
-  --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-border:#c4b5fd;
-  --teal:#0d9488;--teal-bg:#f0fdfa;--teal-border:#99f6e4;
-  --c1:#c47c1a;--c2:#2563eb;
+  --bg:#ffffff;--surface:#ffffff;--surface2:#f7f6f3;--surface3:#efefef;
+  --border:rgba(0,0,0,.09);--border2:rgba(0,0,0,.15);
+  --text:#191919;--text2:#37352f;--text3:#787774;
+  --accent:#2383e2;--accent-bg:#e8f3fd;
+  --green:#0f7b6c;--green-bg:#e9f5f2;--green-border:#a0d9ce;
+  --red:#e03e3e;--red-bg:#fbe8e8;--red-border:#f4b8b8;
+  --blue:#2383e2;--blue-bg:#e8f3fd;--blue-border:#a8cff5;
+  --purple:#9065b0;--purple-bg:#f4f0f8;--purple-border:#d3bde8;
+  --teal:#0f7b6c;--teal-bg:#e9f5f2;--teal-border:#a0d9ce;
+  --c1:#2383e2;--c2:#9065b0;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
+html,body{height:100%;background:#ffffff;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
 .shell{display:flex;height:100vh;overflow:hidden}
 
 /* ── Sidebar ── */
@@ -85,7 +85,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Inter'
 /* ── Tables ── */
 .tbl-wrap{overflow-x:auto;overflow-y:auto;max-height:70vh;border-radius:6px;border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse;font-size:13.5px;white-space:nowrap}
-thead th{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--text2);padding:11px 13px;border-bottom:2px solid var(--border2);text-align:left;cursor:pointer;background:var(--surface2);user-select:none;transition:color .15s;position:sticky;top:0;z-index:2;font-weight:600}
+thead th{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.3px;text-transform:uppercase;color:var(--text3);padding:10px 13px;border-bottom:1px solid var(--border2);text-align:left;cursor:pointer;background:var(--surface2);user-select:none;transition:color .15s;position:sticky;top:0;z-index:2;font-weight:600}
 thead th:hover{color:var(--accent)}
 tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
 tbody tr:last-child{border-bottom:none}
@@ -116,7 +116,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 .fbar input{flex:1;min-width:150px}
 
 /* ── Buttons ── */
-.btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;border:none;border-radius:7px;padding:8px 15px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
+.btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;border:none;border-radius:4px;padding:7px 14px;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:5px}
 .btn-outline{background:#fff;border:1px solid var(--border2);color:var(--text2);box-shadow:0 1px 2px rgba(0,0,0,.05)}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
 .btn-dark{background:var(--text);color:#fff}
@@ -274,7 +274,20 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
 .opc-sym{font-family:'Inter',sans-serif;font-size:14px;font-weight:700;min-width:120px}
 .opc-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
 .opc-stat{font-family:'JetBrains Mono',monospace;font-size:11px;display:flex;flex-direction:column;gap:2px}
-.opc-actions{margin-left:auto;display:flex;gap:6px}</style>
+.opc-actions{margin-left:auto;display:flex;gap:6px}
+/* TF badge colors */
+.tf-m1{background:#fef9c3;color:#854d0e;border:1px solid #fde047}
+.tf-m5{background:#fef3c7;color:#92400e;border:1px solid #f59e0b55}
+.tf-m15{background:#ffedd5;color:#9a3412;border:1px solid #fb923c55}
+.tf-m30{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+.tf-h1{background:#e0f2fe;color:#075985;border:1px solid #7dd3fc}
+.tf-h2{background:#dbeafe;color:#1e40af;border:1px solid #93c5fd}
+.tf-h4{background:#ede9fe;color:#5b21b6;border:1px solid #c4b5fd}
+.tf-h8{background:#f3e8ff;color:#6b21a8;border:1px solid #d8b4fe}
+.tf-d1{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
+.tf-w1{background:#ecfdf5;color:#047857;border:1px solid #34d399}
+.tf-default{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+</style>
 </head>
 <body>
 <div class="shell">
@@ -426,12 +439,13 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
       <th onclick="sortT('openDate')">Nyitás ↕</th><th>Ny. session</th>
       <th onclick="sortT('closeDate')">Zárás ↕</th><th>Zár. session</th>
       <th>Számla</th><th>Szimbólum</th>
-      <th onclick="sortT('dir')">Irány ↕</th><th onclick="sortT('lot')">Lot ↕</th>
+      <th onclick="sortT('dir')">Irány ↕</th><th>TF</th><th onclick="sortT('lot')">Lot ↕</th>
       <th>Nyitó ár</th><th>Záró ár</th><th>S/L</th><th>T/P</th>
       <th onclick="sortT('rr')">R:R ↕</th>
       <th>Zárás</th>
       <th onclick="sortT('pnl')">Nyereség ↕</th><th>Jut.</th><th>Kamat</th>
       <th onclick="sortT('net')">Nettó ↕</th>
+      <th>Idő ⏱</th>
       <th>Megjegyzés</th>
       <th>Magic</th>
       <th></th>
@@ -557,7 +571,7 @@ td{padding:9px 13px;vertical-align:middle;color:var(--text)}
     <div style="background:var(--accent-bg);border:1px solid var(--blue-border);border-radius:6px;padding:10px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px">
       <span style="font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--blue);font-weight:600;white-space:nowrap">📋 Másolás alapja</span>
       <select class="finput" id="rc-copy-from" style="flex:1;font-family:'JetBrains Mono',monospace;font-size:11px" onchange="copyRobotConfig(this.value)">
-        <option value="">— Töltsd be egy meglévő konfig paramétereit —</option>
+        <option value="">— Töltsd be egy meglévő konfig paramétereit (magic number szerint) —</option>
       </select>
     </div>
 
@@ -1919,7 +1933,6 @@ function updateCopyFromDropdown(){
   const sel = document.getElementById('rc-copy-from');
   if(!sel) return;
   sel.innerHTML = '<option value="">— Töltsd be egy meglévő konfig paramétereit —</option>';
-  // Group by magic number
   const byMagic = {};
   ROBOT_CONFIGS.forEach(cfg => {
     const m = cfg.magic || 'nincs';
@@ -1947,7 +1960,6 @@ function copyRobotConfig(fromId){
   const src = ROBOT_CONFIGS.find(c=>c.id===fromId);
   if(!src) return;
   const p = src.params || {};
-  // Csak a paramétereket töltjük be — nevet, dátumot nem
   document.getElementById('rc-acct').value = src.acct||'both';
   document.getElementById('rc-magic').value = src.magic||'';
   document.getElementById('rc-tf').value = src.tf||'';
@@ -1961,31 +1973,30 @@ function copyRobotConfig(fromId){
     symSel.value = src.symbol||'';
     document.getElementById('rc-symbol-custom-wrap').style.display = 'none';
   }
-  document.getElementById('rc-risk').value      = p.riskPercent||'';
-  document.getElementById('rc-fixedlot').value  = p.fixedLotsize||'false';
-  document.getElementById('rc-bodysize').value  = p.bodySizeMultiplicator||'';
+  document.getElementById('rc-risk').value = p.riskPercent||'';
+  document.getElementById('rc-fixedlot').value = p.fixedLotsize||'false';
+  document.getElementById('rc-bodysize').value = p.bodySizeMultiplicator||'';
   document.getElementById('rc-mincandle').value = p.min_candlesize||'';
   document.getElementById('rc-maxcandle').value = p.max_candlesize||'';
-  document.getElementById('rc-spread').value    = p.max_Spread||'';
-  document.getElementById('rc-lookback').value  = p.lookback||'';
-  document.getElementById('rc-maxrsi').value    = p.max_RSI_filter||'';
-  document.getElementById('rc-minrsi').value    = p.min_RSI_filter||'';
-  document.getElementById('rc-rsilong').value   = p.RSI_exit_long||'';
-  document.getElementById('rc-rsishort').value  = p.RSI_exit_short||'';
+  document.getElementById('rc-spread').value = p.max_Spread||'';
+  document.getElementById('rc-lookback').value = p.lookback||'';
+  document.getElementById('rc-maxrsi').value = p.max_RSI_filter||'';
+  document.getElementById('rc-minrsi').value = p.min_RSI_filter||'';
+  document.getElementById('rc-rsilong').value = p.RSI_exit_long||'';
+  document.getElementById('rc-rsishort').value = p.RSI_exit_short||'';
   document.getElementById('rc-pendingshift').value = p.pendingStopShiftPoint||'';
-  document.getElementById('rc-matf').value      = p.MA_TF||'';
-  document.getElementById('rc-maperiod').value  = p.ma_period||'';
-  document.getElementById('rc-aofilter').value  = p.AO_filter||'Disabled';
-  document.getElementById('rc-stfilter').value  = p.ST_filter||'Disabled';
-  document.getElementById('rc-stperiod').value  = p.ST_period||'';
-  document.getElementById('rc-statr').value     = p.ST_ATR_multiplier||'';
-  document.getElementById('rc-stprice').value   = p.ST_price_source||'High price';
-  document.getElementById('rc-stwicks').value   = p.ST_include_wicks||'false';
+  document.getElementById('rc-matf').value = p.MA_TF||'';
+  document.getElementById('rc-maperiod').value = p.ma_period||'';
+  document.getElementById('rc-aofilter').value = p.AO_filter||'Disabled';
+  document.getElementById('rc-stfilter').value = p.ST_filter||'Disabled';
+  document.getElementById('rc-stperiod').value = p.ST_period||'';
+  document.getElementById('rc-statr').value = p.ST_ATR_multiplier||'';
+  document.getElementById('rc-stprice').value = p.ST_price_source||'High price';
+  document.getElementById('rc-stwicks').value = p.ST_include_wicks||'false';
   ROBOT_BOOL_PARAMS.forEach(bp=>{
     const el = document.getElementById('rc-'+bp);
     if(el) el.checked = p[bp]===true||p[bp]==='true';
   });
-  // Reset dropdown
   document.getElementById('rc-copy-from').value = '';
   toast('Paraméterek betöltve: ' + src.name + ' ✓', 'ok');
 }
@@ -2264,7 +2275,7 @@ function robotConfigCard(cfg, compact){
           <span style="font-family:'Inter',sans-serif;font-size:15px;font-weight:700">${cfg.name}</span>
           ${isActive?'<span class="badge badge-g" style="font-size:9px">AKTÍV</span>':''}
           ${cfg.magic?`<span class="badge" style="background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;font-family:\'DM Mono\',monospace">Magic: ${cfg.magic}</span>`:''}
-          ${cfg.tf?`<span class="badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-family:'JetBrains Mono',monospace">${cfg.tf}</span>`:''}
+          ${cfg.tf?tfBadge(cfg.tf):''}
           ${cfg.symbol?`<span class="badge" style="background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe;font-family:'JetBrains Mono',monospace">${cfg.symbol}</span>`:''}
           <span class="badge" style="background:var(--surface2);color:var(--text3);border:1px solid var(--border)">${cfg.acct==='both'?'Mindkét számla':cfg.acct+'. számla'}</span>
         </div>
@@ -2841,6 +2852,48 @@ function deleteTx(aid, idx){
   renderBalance();
   lsSave();
 }
+
+// TF badge helper
+function tfBadge(tf){
+  if(!tf) return '<span style="color:var(--text3);font-size:11px">—</span>';
+  const map = {
+    'M1':'tf-m1','M5':'tf-m5','M15':'tf-m15','M30':'tf-m30',
+    'H1':'tf-h1','H2':'tf-h2','H4':'tf-h4','H8':'tf-h8',
+    'D1':'tf-d1','W1':'tf-w1'
+  };
+  const cls = map[tf] || 'tf-default';
+  return '<span class="badge '+cls+'" style="font-size:10px">'+tf+'</span>';
+}
+
+// Trade duration excluding weekends (Fri 23:00 - Sun midnight)
+function tradeDuration(openDate, closeDate){
+  if(!openDate || !closeDate) return '—';
+  let ms = 0;
+  let cur = new Date(openDate.getTime());
+  const end = new Date(closeDate.getTime());
+  while(cur < end){
+    const next = new Date(Math.min(cur.getTime() + 60000, end.getTime())); // 1 min steps
+    const dow = cur.getDay(); // 0=Sun,6=Sat
+    const h = cur.getHours() + cur.getMinutes()/60;
+    // Skip: Fri 23:00+ or Sat or Sun 00:00-23:59
+    const isFriNight = dow === 5 && h >= 23;
+    const isSat = dow === 6;
+    const isSun = dow === 0;
+    if(!isFriNight && !isSat && !isSun){
+      ms += next.getTime() - cur.getTime();
+    }
+    cur = next;
+  }
+  const totalMin = Math.round(ms / 60000);
+  const h = Math.floor(totalMin / 60);
+  const m = totalMin % 60;
+  if(h === 0) return m + 'p';
+  if(h < 24) return h + 'ó ' + (m>0?m+'p':'');
+  const days = Math.floor(h/24);
+  const remH = h % 24;
+  return days + 'n ' + (remH>0?remH+'ó':'');
+}
+
 function calcStats(trades, depositedCapital=0){
   const wins=trades.filter(t=>t.net>0.01),loss=trades.filter(t=>t.net<-0.01),be=trades.filter(t=>Math.abs(t.net)<=0.01);
   const totalPnl=trades.reduce((s,t)=>s+t.net,0);
@@ -3258,7 +3311,7 @@ function renderTradePage(){
   [...new Set(getAll().map(t=>t.sym))].sort().forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;sf.add(o);});
   sf.value=cur;
   const tbody=document.getElementById('trade-tbody');
-  if(!slice.length){tbody.innerHTML='<tr><td colspan="22" class="empty-row">Nincs találat</td></tr>';return;}
+  if(!slice.length){tbody.innerHTML='<tr><td colspan="24" class="empty-row">Nincs találat</td></tr>';return;}
   tbody.innerHTML=slice.map(t=>{
     const nCls=t.net>0.01?'c-g':t.net<-0.01?'c-r':'';
     const rrStr=t.rr!=null?(t.rr>=0?'<span class="c-g">':'<span class="c-r">')+t.rr.toFixed(2)+'R</span>':'<span style="color:var(--text3)">—</span>';
@@ -3275,6 +3328,7 @@ function renderTradePage(){
       <td><span class="badge ${t.acct==='1'?'badge-a':'badge-b'}">${t.acct}. sz.</span>${t.isManual?'<span class="badge" style="background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0;margin-left:3px">M</span>':''}</td>
       <td><span class="mono fw5 ${symClass(t.sym)}">${t.sym}</span></td>
       <td><span class="badge ${t.dir==='buy'?'badge-g':'badge-r'}">${t.dir.toUpperCase()}</span></td>
+      <td>${(()=>{const cfg=getActiveConfig(t.openDate,t.acct,t.sym);return tfBadge(cfg?.tf||'');})()}</td>
       <td class="mono">${t.lot}</td>
       <td class="mono" style="color:var(--text2);font-size:11px">${t.open}</td>
       <td class="mono" style="color:var(--text2);font-size:11px">${t.close}</td>
@@ -3286,6 +3340,7 @@ function renderTradePage(){
       <td class="mono" style="color:var(--text3);font-size:11px">${t.comm.toFixed(2)}</td>
       <td class="mono" style="color:var(--text3);font-size:11px">${t.swap.toFixed(2)}</td>
       <td class="mono fw5 ${nCls}">${fmtUSD(t.net)}</td>
+      <td class="mono" style="font-size:11px;color:var(--text3);white-space:nowrap">${tradeDuration(t.openDate,t.closeDate)}</td>
       <td style="max-width:160px">${tagHtml}${notePreview}</td>
       <td class="mono" style="font-size:10px">${(()=>{const cfg=getActiveConfig(t.openDate,t.acct,t.sym);return magicBadge(cfg?.magic||'');})()}</td>
       <td style="padding:4px 6px" onclick="event.stopPropagation()">
